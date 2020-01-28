@@ -1,0 +1,7 @@
+ja:
+  enumerize:
+    item:
+      status:
+        post: 'Qiitaに投稿'
+        limited_post: '限定共有投稿'
+        save: '下書き保存'

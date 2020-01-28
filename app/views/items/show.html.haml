@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b User:
+  = @item.user
+%p
+  %b Title:
+  = @item.title
+%p
+  %b Body:
+  = @item.body
+%p
+  %b Status:
+  = @item.status
+
+= link_to 'Edit', edit_item_path(@item)
+\|
+= link_to 'Back', items_path
