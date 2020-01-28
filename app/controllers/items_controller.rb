@@ -1,8 +1,9 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_item, only: [:edit, :update, :destroy]
   skip_before_action :check_logged_in, only: :show
 
   def show
+    @item = Item.find(params[:id])
   end
 
   def new
@@ -32,13 +33,14 @@ class ItemsController < ApplicationController
 
   def destroy
     @item.destroy
-    redirect_to @user, notice: '記事を削除しました。'
+    redirect_to current_user, notice: '記事を削除しました。'
   end
 
   private
 
   def set_item
-    @item = Item.find(params[:id])
+    # 不正な親子関係の場合にエラーとなるように
+    @item = current_user.items.find(params[:id])
   end
 
   def item_params
