@@ -3,7 +3,7 @@ class Item < ApplicationRecord
 
   belongs_to :user
 
-  enumerize :status, in: %i(post limited_post save), default: :post, scope: true
+  enumerize :status, in: %w(post limited_post save), default: :post, scope: true
 
   validates :title,
             presence: true,
@@ -14,6 +14,6 @@ class Item < ApplicationRecord
             length: {maximum: 100_000}
 
   validates :status,
-            inclusion: {in: %i(post limited_post save)}
+            inclusion: {in: %w(post limited_post save)}
 
 end
