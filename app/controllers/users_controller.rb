@@ -2,7 +2,9 @@ class UsersController < ApplicationController
   skip_before_action :check_logged_in, only: [:show, :new, :create]
 
   def show
-    @user = User.find(params[:id])
+    # ヒットしなかったら404にしたい
+    # => find_by!を使用して、ActiveRecord::RecordNotFoundがraiseされるようにする
+    @user = User.find_by!(screen_name: params[:screen_name])
   end
 
   def new

@@ -1,15 +1,10 @@
-%p#notice= notice
+.div
+  @#{@user.screen_name}
 
-%p
-  %b Screen name:
-  = @user.screen_name
-%p
-  %b Email:
-  = @user.email
-%p
-  %b Password digest:
-  = @user.password_digest
+.div
+  = @user.items.size
+  Items
 
-= link_to 'Edit', edit_user_path(@user)
-\|
-= link_to 'Back', users_path
+- @user.items.each do |item|
+  .div
+    = item.title
