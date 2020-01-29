@@ -1,15 +1,12 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
   skip_before_action :check_logged_in, only: [:show, :new, :create]
 
   def show
+    @user = User.find(params[:id])
   end
 
   def new
     @user = User.new
-  end
-
-  def edit
   end
 
   def create
@@ -25,25 +22,13 @@ class UsersController < ApplicationController
     end
   end
 
-  def update
-    if @user.update(user_params)
-      redirect_to edit_user_url @user, notice: 'プロフィール情報の編集が完了しました。'
-    else
-      render :edit
-    end
-  end
-
   def destroy
+    current_user.destroy
     reset_session
-    @user.destroy
     redirect_to '/', notice: '退会処理が完了しました。'
   end
 
   private
-
-  def set_user
-    @user = User.find(params[:id])
-  end
 
   def user_params
     params.require(:user).permit(:screen_name, :email, :password)
