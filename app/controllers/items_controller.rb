@@ -3,6 +3,7 @@ class ItemsController < ApplicationController
 
   def show
     # 不正な親子関係の場合にエラーとなるように
-    @item = User.find_by!(screen_name: params[:screen_name]).items.find_by_hashid(params[:id])
+    user = User.find_by!(screen_name: params[:screen_name])
+    @item = user.drafts.find_by_hashid(params[:id]).item
   end
 end

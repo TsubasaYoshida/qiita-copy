@@ -22,7 +22,7 @@ class DraftsController < ApplicationController
     if @draft.save
       @item.draft_id = @draft.id
       @item.save
-      redirect_to "/#{current_user.screen_name}/items/#{@item.hashid}", notice: '記事を投稿しました。'
+      redirect_to "/#{current_user.screen_name}/items/#{@draft.hashid}", notice: '記事を投稿しました。'
     else
       render :new
     end
@@ -45,7 +45,7 @@ class DraftsController < ApplicationController
 
   def set_draft
     # 不正な親子関係の場合にエラーとなるように
-    @draft = current_user.drafts.find_by!(params[:hashid])
+    @draft = current_user.drafts.find_by_hashid(params[:id])
   end
 
   def draft_params

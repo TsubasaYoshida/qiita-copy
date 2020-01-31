@@ -7,4 +7,4 @@
 
 - @user.items.each do |item|
   .div
-    = link_to item.title, "/#{@user.screen_name}/items/#{item.hashid}"
+    = link_to item.title, "/#{@user.screen_name}/items/#{item.draft.hashid}"
