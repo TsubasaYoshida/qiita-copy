@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_30_145120) do
+ActiveRecord::Schema.define(version: 2020_01_31_115857) do
 
   create_table "drafts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -25,9 +25,10 @@ ActiveRecord::Schema.define(version: 2020_01_30_145120) do
     t.bigint "user_id", null: false
     t.string "title", null: false
     t.text "body", null: false
-    t.string "status", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "draft_id", null: false
+    t.index ["draft_id"], name: "index_items_on_draft_id"
     t.index ["user_id"], name: "index_items_on_user_id"
   end
 
@@ -40,5 +41,6 @@ ActiveRecord::Schema.define(version: 2020_01_30_145120) do
   end
 
   add_foreign_key "drafts", "users"
+  add_foreign_key "items", "drafts"
   add_foreign_key "items", "users"
 end

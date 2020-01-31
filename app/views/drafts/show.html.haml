@@ -2,14 +2,10 @@
 
 %p
   %b User:
-  = @draft.user
+  = @draft.user.screen_name
 %p
   %b Title:
   = @draft.title
 %p
   %b Body:
   = @draft.body
-
-= link_to 'Edit', edit_draft_path(@draft)
-\|
-= link_to 'Back', drafts_path

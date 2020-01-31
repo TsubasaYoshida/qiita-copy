@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  resources :drafts
+  resources :drafts, only: [:show, :new, :edit, :create, :update, :destroy]
   resources :users, only: [:new, :create, :destroy]
-  resources :items, only: [:show, :new, :edit, :create, :update, :destroy]
   get 'home/index'
   get ':screen_name', to: 'users#show'
+  get ':screen_name/items/:id', to: 'items#show'
   get '/deactivate', to: 'users#destroy'
   root to: 'home#index'
 end
