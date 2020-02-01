@@ -2,7 +2,7 @@
   = f.input :title
   = f.input :body
   - if @draft.edit_after_posting
-    = f.input :after_post, include_blank: false, selected: :save
+    = f.select :type, Draft::AFTER_POST, selected: 'save'
   - else
-    = f.input :before_post, include_blank: false, selected: :post
+    = f.select :type, Draft::BEFORE_POST, selected: 'post'
   = f.button :submit

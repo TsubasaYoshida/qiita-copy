@@ -20,32 +20,33 @@ class DraftsController < ApplicationController
   end
 
   def create
-    draft = params.require(:draft).permit(:title, :body, :before_post)
-    if draft[:before_post] == 'post'
-      # Qiitaに投稿
-      # draft.delete(:before_post)
-      @draft = Draft.new(draft)
-      @draft.user_id = current_user.id
-      @item = Item.new(draft)
-      @item.user_id = current_user.id
+    @draft = Draft.new(draft_params)
+    @draft.user_id = current_user.id
+
+    if @draft.type == 'post' # Qiitaに投稿
       if @draft.save
-        @item.draft_id = @draft.id
+        @item = Item.new(
+            title: @draft.title,
+            body: @draft.body,
+            user_id: current_user.id,
+            draft_id: @draft.id,
+        )
         @item.save
         redirect_to "/#{current_user.screen_name}/items/#{@draft.hashid}", notice: '記事を投稿しました。'
       else
         render :new
       end
 
-    else
-      # 下書き保存
-      draft.delete(:before_post)
-      @draft = Draft.new(draft)
-      @draft.user_id = current_user.id
+    elsif @draft.type == 'save' # 下書き保存
       if @draft.save
         redirect_to @draft, notice: '下書き保存しました。'
       else
         render :new
       end
+
+    else
+      # 限定共有投稿
+      # TODO implement
     end
   end
 
@@ -54,51 +55,45 @@ class DraftsController < ApplicationController
   # パターン3: 投稿後編集の下書き -> 投稿後編集の下書き
   # パターン4: 投稿後編集の下書き -> Qiita記事の更新
   def update
-    if @draft.item
-      draft = params.require(:draft).permit(:title, :body, :after_post)
-      if draft[:after_post] == 'post'
-        # パターン4: 投稿後編集の下書き -> Qiita記事の更新
-        draft.delete(:after_post)
-        draft.edit_after_posting = false
-        if @draft.update(draft) && @draft.item.update(title: draft.title, body: draft.body)
+    draft = draft_params
+
+    if draft[:type] == 'save'
+      # パターン1: 未投稿下書き -> 未投稿下書き
+      # パターン3: 投稿後編集の下書き -> 投稿後編集の下書き
+      if @draft.update(draft)
+        redirect_to @draft, notice: '下書きを更新しました。'
+      else
+        render :edit
+      end
+
+    elsif draft[:type] == 'post'
+
+      if @draft.item # パターン4: 投稿後編集の下書き -> Qiita記事の更新
+        @draft.edit_after_posting = false
+        if @draft.update(draft) && @draft.item.update(title: draft[:title], body: draft[:body])
           redirect_to "/#{current_user.screen_name}/items/#{@draft.hashid}", notice: '記事を投稿しました。'
         else
           render :edit
         end
 
-      else
-        # パターン3: 投稿後編集の下書き -> 投稿後編集の下書き
-        draft.delete(:after_post)
-        if @draft.update(draft)
-          redirect_to @draft, notice: '下書きを更新しました。'
+      else # パターン2: 未投稿下書き -> Qiitaに投稿
+        item = Item.new(
+            title: draft[:title],
+            body: draft[:body],
+            user_id: current_user.id,
+            draft_id: @draft.id,
+        )
+        if @draft.update(draft) && item.save
+          redirect_to "/#{current_user.screen_name}/items/#{@draft.hashid}", notice: '記事を投稿しました。'
         else
           render :edit
         end
       end
 
     else
-      draft = params.require(:draft).permit(:title, :body, :before_post)
-      if draft[:before_post] == 'post'
-        # パターン2: 未投稿下書き -> Qiitaに投稿
-        draft.delete(:before_post)
-        item = Item.new(draft)
-        item.user_id = current_user.id
-        item.draft_id = @draft.id
-        if @draft.update(draft) && item.save
-          redirect_to "/#{current_user.screen_name}/items/#{@draft.hashid}", notice: '記事を投稿しました。'
-        else
-          render :edit
-        end
-
-      else
-        # パターン1: 未投稿下書き -> 未投稿下書き
-        draft.delete(:before_post)
-        if @draft.update(draft)
-          redirect_to @draft, notice: '下書きを更新しました。'
-        else
-          render :edit
-        end
-      end
+      # 限定共有投稿
+      # TODO implement
+      # TODO item と private は共存しないので、そのロジックバリデーションが必要
     end
   end
 
@@ -114,6 +109,10 @@ class DraftsController < ApplicationController
   end
 
   private
+
+  def draft_params
+    params.require(:draft).permit(:title, :body, :type)
+  end
 
   def set_draft
     # 不正な親子関係の場合にエラーとなるように
