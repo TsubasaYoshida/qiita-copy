@@ -1,0 +1,5 @@
+- @drafts.each do |draft|
+  .div
+    = link_to draft.title, draft
+    = link_to 'Edit', edit_draft_path(draft)
+    = link_to 'Destroy', draft, method: :delete, data: { confirm: 'Are you sure?' }

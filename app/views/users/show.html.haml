@@ -7,4 +7,6 @@
 
 - @user.items.each do |item|
   .div
-    = item.title
+    = link_to item.title, "/#{@user.screen_name}/items/#{item.draft.hashid}"
+  .div
+    = link_to 'delete', "/#{@user.screen_name}/items/#{item.draft.hashid}", method: :delete

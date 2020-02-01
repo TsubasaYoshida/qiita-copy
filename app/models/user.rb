@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_secure_password
 
   has_many :items
+  has_many :drafts
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :screen_name,

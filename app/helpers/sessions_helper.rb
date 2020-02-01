@@ -7,4 +7,8 @@ module SessionsHelper
       @current_user ||= User.find_by(id: session[:user_id])
     end
   end
+
+  def current_user_url
+    "/#{current_user.screen_name}"
+  end
 end
