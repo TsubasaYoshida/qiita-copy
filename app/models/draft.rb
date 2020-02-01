@@ -5,7 +5,11 @@ class Draft < ApplicationRecord
   belongs_to :user
   has_one :item
 
-  enumerize :status, in: %w(post limited_post save), default: :post
+  attr_accessor :before_post
+
+  enumerize :before_post, in: %w(post limited_post save)
+  enumerize :after_post, in: %w(post save)
+  enumerize :after_limited_post, in: %w(limited_post save)
 
   validates :title,
             presence: true,
@@ -13,7 +17,11 @@ class Draft < ApplicationRecord
   validates :body,
             presence: true,
             length: {maximum: 100_000}
-  validates :status,
+  validates :before_post,
             inclusion: {in: %w(post limited_post save)}
+  validates :after_post,
+            inclusion: {in: %w(post save)}
+  validates :after_limited_post,
+            inclusion: {in: %w(limited_post save)}
 
 end

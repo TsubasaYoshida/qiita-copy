@@ -1,5 +1,10 @@
 class DraftsController < ApplicationController
   before_action :set_draft, only: [:show, :edit, :update, :destroy]
+  before_action :select_drafts, only: [:index, :show]
+
+  # 本家と挙動揃えられていない
+  def index
+  end
 
   def show
   end
@@ -9,36 +14,103 @@ class DraftsController < ApplicationController
   end
 
   def edit
+    if @draft.item
+      @draft.update(edit_after_posting: true)
+    end
   end
 
   def create
-    draft = draft_params
-    draft.delete(:status)
-    @draft = Draft.new(draft)
-    @draft.user_id = current_user.id
-    @item = Item.new(draft)
-    @item.user_id = current_user.id
+    draft = params.require(:draft).permit(:title, :body, :before_post)
+    if draft[:before_post] == 'post'
+      # Qiitaに投稿
+      # draft.delete(:before_post)
+      @draft = Draft.new(draft)
+      @draft.user_id = current_user.id
+      @item = Item.new(draft)
+      @item.user_id = current_user.id
+      if @draft.save
+        @item.draft_id = @draft.id
+        @item.save
+        redirect_to "/#{current_user.screen_name}/items/#{@draft.hashid}", notice: '記事を投稿しました。'
+      else
+        render :new
+      end
 
-    if @draft.save
-      @item.draft_id = @draft.id
-      @item.save
-      redirect_to "/#{current_user.screen_name}/items/#{@draft.hashid}", notice: '記事を投稿しました。'
     else
-      render :new
+      # 下書き保存
+      draft.delete(:before_post)
+      @draft = Draft.new(draft)
+      @draft.user_id = current_user.id
+      if @draft.save
+        redirect_to @draft, notice: '下書き保存しました。'
+      else
+        render :new
+      end
     end
   end
 
+  # パターン1: 未投稿下書き -> 未投稿下書き
+  # パターン2: 未投稿下書き -> Qiitaに投稿
+  # パターン3: 投稿後編集の下書き -> 投稿後編集の下書き
+  # パターン4: 投稿後編集の下書き -> Qiita記事の更新
   def update
-    if @draft.update(draft_params)
-      redirect_to @draft, notice: '記事を更新しました。'
+    if @draft.item
+      draft = params.require(:draft).permit(:title, :body, :after_post)
+      if draft[:after_post] == 'post'
+        # パターン4: 投稿後編集の下書き -> Qiita記事の更新
+        draft.delete(:after_post)
+        draft.edit_after_posting = false
+        if @draft.update(draft) && @draft.item.update(title: draft.title, body: draft.body)
+          redirect_to "/#{current_user.screen_name}/items/#{@draft.hashid}", notice: '記事を投稿しました。'
+        else
+          render :edit
+        end
+
+      else
+        # パターン3: 投稿後編集の下書き -> 投稿後編集の下書き
+        draft.delete(:after_post)
+        if @draft.update(draft)
+          redirect_to @draft, notice: '下書きを更新しました。'
+        else
+          render :edit
+        end
+      end
+
     else
-      render :edit
+      draft = params.require(:draft).permit(:title, :body, :before_post)
+      if draft[:before_post] == 'post'
+        # パターン2: 未投稿下書き -> Qiitaに投稿
+        draft.delete(:before_post)
+        item = Item.new(draft)
+        item.user_id = current_user.id
+        item.draft_id = @draft.id
+        if @draft.update(draft) && item.save
+          redirect_to "/#{current_user.screen_name}/items/#{@draft.hashid}", notice: '記事を投稿しました。'
+        else
+          render :edit
+        end
+
+      else
+        # パターン1: 未投稿下書き -> 未投稿下書き
+        draft.delete(:before_post)
+        if @draft.update(draft)
+          redirect_to @draft, notice: '下書きを更新しました。'
+        else
+          render :edit
+        end
+      end
     end
   end
 
+  # Vue.jsに任せるべき?(Railsのみだと本家と挙動揃えられない)
   def destroy
-    @draft.destroy
-    redirect_to current_user, notice: '記事を削除しました。'
+    if @draft.item
+      @draft.update(title: @draft.item.title, body: @draft.item.body)
+    else
+      @draft.destroy
+    end
+
+    redirect_to drafts_url
   end
 
   private
@@ -48,7 +120,10 @@ class DraftsController < ApplicationController
     @draft = current_user.drafts.find_by_hashid(params[:id])
   end
 
-  def draft_params
-    params.require(:draft).permit(:title, :body, :status)
+  def select_drafts
+    # 未投稿のものと、投稿後に編集したもの
+    @drafts = current_user.drafts.select do |draft|
+      !draft.item || draft.edit_after_posting
+    end
   end
 end

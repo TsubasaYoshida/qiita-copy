@@ -1,5 +1,8 @@
 = simple_form_for(@draft) do |f|
   = f.input :title
   = f.input :body
-  = f.input :status
+  - if @draft.edit_after_posting
+    = f.input :after_post, include_blank: false, selected: :save
+  - else
+    = f.input :before_post, include_blank: false, selected: :post
   = f.button :submit
