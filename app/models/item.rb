@@ -11,7 +11,7 @@ class Item < ApplicationRecord
         draft_id: draft.id,
     )
 
-    # raft.tags.each だと動かない
+    # draft.tags.each だと動かない
     draft.tags.all.each do |tag|
       tag.items << item
     end
