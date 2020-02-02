@@ -1,0 +1,5 @@
+= @tag.name
+
+- @tag.items.each do |item|
+  .div
+    = link_to item.title, item_url(item)
