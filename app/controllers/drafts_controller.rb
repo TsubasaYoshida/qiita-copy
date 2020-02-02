@@ -14,39 +14,30 @@ class DraftsController < ApplicationController
   end
 
   def edit
-    if @draft.item
-      @draft.update(edit_after_posting: true)
-    end
+    @draft.restore_tag_names
+    @draft.update(edit_after_posting: true) if @draft.item
   end
 
   def create
     @draft = Draft.new(draft_params)
     @draft.user_id = current_user.id
 
-    if @draft.type == 'post' # Qiitaに投稿
-      if @draft.save
-        @item = Item.new(
-            title: @draft.title,
-            body: @draft.body,
-            user_id: current_user.id,
-            draft_id: @draft.id,
-        )
-        @item.save
-        redirect_to "/#{current_user.screen_name}/items/#{@draft.hashid}", notice: '記事を投稿しました。'
-      else
-        render :new
-      end
+    if @draft.save
+      @draft.attach_tags
 
-    elsif @draft.type == 'save' # 下書き保存
-      if @draft.save
+      if @draft.type == 'post'
+        Item.make_copy(@draft)
+        redirect_to item_url(@draft.item), notice: '記事を投稿しました。'
+
+      elsif @draft.type == 'save'
         redirect_to @draft, notice: '下書き保存しました。'
-      else
-        render :new
-      end
 
+      else
+        # 限定共有投稿
+        # TODO implement
+      end
     else
-      # 限定共有投稿
-      # TODO implement
+      render :new
     end
   end
 
@@ -111,7 +102,7 @@ class DraftsController < ApplicationController
   private
 
   def draft_params
-    params.require(:draft).permit(:title, :body, :type)
+    params.require(:draft).permit(:title, :body, :type, :tag_names)
   end
 
   def set_draft

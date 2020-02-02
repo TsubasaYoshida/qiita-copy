@@ -9,3 +9,7 @@
 %p
   %b Body:
   = @item.body
+
+.div
+  - @item.tags.each do |tag|
+    = link_to tag.name, tag_url(tag)

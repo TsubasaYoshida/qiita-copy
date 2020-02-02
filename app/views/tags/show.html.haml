@@ -1,9 +1,5 @@
-%p#notice= notice
+= @tag.name
 
-%p
-  %b Name:
-  = @tag.name
-
-= link_to 'Edit', edit_tag_path(@tag)
-\|
-= link_to 'Back', tags_path
+- @tag.items.each do |item|
+  .div
+    = link_to item.title, item_url(item)
