@@ -4,16 +4,22 @@ class Item < ApplicationRecord
   has_and_belongs_to_many :tags
 
   def self.make_copy(draft)
-    item = self.create(
+    # レコードがあれば更新、無ければ作成
+    item = self.find_or_initialize_by(draft_id: draft.id)
+    item.update(
         title: draft.title,
         body: draft.body,
         user_id: draft.user_id,
         draft_id: draft.id,
     )
 
-    # draft.tags.each だと動かない
+    # 毎回タグをデタッチしてからアタッチし直す(タグ削除やタグ更新のため)
+    item.tags.clear
+    # draft.tags.each だと動かない。draft.tags.all.each なら動く。
     draft.tags.all.each do |tag|
       tag.items << item
     end
+
+    item
   end
 end
