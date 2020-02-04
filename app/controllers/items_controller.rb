@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_item
-  skip_before_action :check_logged_in
+  skip_before_action :check_logged_in, only: :show
 
   def show
   end
