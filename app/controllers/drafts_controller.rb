@@ -15,7 +15,8 @@ class DraftsController < ApplicationController
 
   def edit
     @draft.restore_tag_names
-    @draft.update(edit_after_posting: true) if @draft.item
+    # バリデーションスキップする必要があるため、update_attribute を使用する
+    @draft.update_attribute(:edit_after_posting, true) if @draft.item
   end
 
   def create
@@ -73,12 +74,7 @@ class DraftsController < ApplicationController
 
   # Vue.jsに任せるべき?(Railsのみだと本家と挙動揃えられない)
   def destroy
-    if @draft.item
-      @draft.update(title: @draft.item.title, body: @draft.item.body)
-    else
-      @draft.destroy
-    end
-
+    @draft.destroy_draft
     redirect_to drafts_url
   end
 

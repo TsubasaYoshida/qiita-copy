@@ -6,9 +6,7 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    draft = @item.draft
-    @item.destroy
-    draft.destroy
+    @item.draft.destroy
     redirect_to current_user_url
   end
 
