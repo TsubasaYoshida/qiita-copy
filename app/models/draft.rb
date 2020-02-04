@@ -3,7 +3,7 @@ class Draft < ApplicationRecord
   extend Enumerize
 
   belongs_to :user
-  has_one :item
+  has_one :item, dependent: :destroy
   has_and_belongs_to_many :tags
 
   attr_accessor :tag_names
@@ -36,5 +36,21 @@ class Draft < ApplicationRecord
 
   def restore_tag_names
     self.tag_names = self.tags.pluck(:name).join(' ')
+  end
+
+  def destroy_draft
+    if self.item
+      # バリデーションスキップする必要がある
+      self.assign_attributes(title: self.item.title, body: self.item.body, edit_after_posting: false)
+      self.save(validate: false)
+
+      self.tags.clear
+      self.item.tags.each do |tag|
+        tag.drafts << self
+      end
+
+    else
+      self.destroy
+    end
   end
 end

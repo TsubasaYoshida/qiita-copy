@@ -15,7 +15,8 @@ class DraftsController < ApplicationController
 
   def edit
     @draft.restore_tag_names
-    @draft.update(edit_after_posting: true) if @draft.item
+    # バリデーションスキップする必要があるため、update_attribute を使用する
+    @draft.update_attribute(:edit_after_posting, true) if @draft.item
   end
 
   def create
@@ -25,6 +26,7 @@ class DraftsController < ApplicationController
     if @draft.save
       @draft.attach_tags
 
+      # TODO 本当は StringInquirer を使いたいが、うまく動かない
       if @draft.type == 'post'
         Item.make_copy(@draft)
         redirect_to item_url(@draft.item), notice: '記事を投稿しました。'
@@ -46,56 +48,33 @@ class DraftsController < ApplicationController
   # パターン3: 投稿後編集の下書き -> 投稿後編集の下書き
   # パターン4: 投稿後編集の下書き -> Qiita記事の更新
   def update
-    draft = draft_params
+    if @draft.update(draft_params)
+      @draft.attach_tags
 
-    if draft[:type] == 'save'
-      # パターン1: 未投稿下書き -> 未投稿下書き
-      # パターン3: 投稿後編集の下書き -> 投稿後編集の下書き
-      if @draft.update(draft)
+      if @draft.type == 'post' # パターン2とパターン4
+
+        # この1文で @draft.item が nil になる -> item_url(@draft.item) が使えない
+        message = @draft.item ? '記事を編集しました。' : '記事を投稿しました。'
+        item = Item.make_copy(@draft)
+        @draft.update(edit_after_posting: false)
+        redirect_to item_url(item), notice: message
+
+      elsif @draft.type == 'save' # パターン1とパターン3
         redirect_to @draft, notice: '下書きを更新しました。'
+
       else
-        render :edit
+        # 限定共有投稿
+        # TODO implement
+        # TODO item と private は共存しないので、そのロジックバリデーションが必要
       end
-
-    elsif draft[:type] == 'post'
-
-      if @draft.item # パターン4: 投稿後編集の下書き -> Qiita記事の更新
-        @draft.edit_after_posting = false
-        if @draft.update(draft) && @draft.item.update(title: draft[:title], body: draft[:body])
-          redirect_to "/#{current_user.screen_name}/items/#{@draft.hashid}", notice: '記事を投稿しました。'
-        else
-          render :edit
-        end
-
-      else # パターン2: 未投稿下書き -> Qiitaに投稿
-        item = Item.new(
-            title: draft[:title],
-            body: draft[:body],
-            user_id: current_user.id,
-            draft_id: @draft.id,
-        )
-        if @draft.update(draft) && item.save
-          redirect_to "/#{current_user.screen_name}/items/#{@draft.hashid}", notice: '記事を投稿しました。'
-        else
-          render :edit
-        end
-      end
-
     else
-      # 限定共有投稿
-      # TODO implement
-      # TODO item と private は共存しないので、そのロジックバリデーションが必要
+      render :edit
     end
   end
 
   # Vue.jsに任せるべき?(Railsのみだと本家と挙動揃えられない)
   def destroy
-    if @draft.item
-      @draft.update(title: @draft.item.title, body: @draft.item.body)
-    else
-      @draft.destroy
-    end
-
+    @draft.destroy_draft
     redirect_to drafts_url
   end
 
