@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :comments
   resources :drafts
   resources :users, only: [:new, :create, :destroy]
   get 'home/index'
