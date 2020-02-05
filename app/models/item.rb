@@ -1,6 +1,7 @@
 class Item < ApplicationRecord
   belongs_to :user
   belongs_to :draft
+  has_many :comments, dependent: :destroy
   has_and_belongs_to_many :tags
 
   def self.make_copy(draft)

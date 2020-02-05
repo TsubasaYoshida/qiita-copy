@@ -3,6 +3,7 @@ class ItemsController < ApplicationController
   skip_before_action :check_logged_in, only: :show
 
   def show
+    @comment = Comment.new
   end
 
   def destroy

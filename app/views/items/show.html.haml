@@ -13,3 +13,11 @@
 .div
   - @item.tags.each do |tag|
     = link_to tag.name, tag_url(tag)
+
+- @item.comments.each do |comment|
+  .div
+    = comment.user.screen_name
+  .div
+    = comment.body
+
+= render 'comments/form'
