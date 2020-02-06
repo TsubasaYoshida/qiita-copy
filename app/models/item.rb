@@ -1,7 +1,13 @@
 class Item < ApplicationRecord
   belongs_to :user
   belongs_to :draft
+  has_many :comments, dependent: :destroy
   has_and_belongs_to_many :tags
+
+  def self.get_item(screen_name, draft_id)
+    # 不正な親子関係の場合にエラーとなるように
+    User.find_by!(screen_name: screen_name).drafts.find_by_hashid(draft_id).item
+  end
 
   def self.make_copy(draft)
     # レコードがあれば更新、無ければ作成

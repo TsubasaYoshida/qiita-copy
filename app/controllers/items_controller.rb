@@ -1,8 +1,9 @@
 class ItemsController < ApplicationController
   before_action :set_item
-  skip_before_action :check_logged_in
+  skip_before_action :check_logged_in, only: :show
 
   def show
+    @comment = Comment.new
   end
 
   def destroy
@@ -13,8 +14,6 @@ class ItemsController < ApplicationController
   private
 
   def set_item
-    # 不正な親子関係の場合にエラーとなるように
-    user = User.find_by!(screen_name: params[:screen_name])
-    @item = user.drafts.find_by_hashid(params[:id]).item
+    @item = Item.get_item(params[:screen_name], params[:id])
   end
 end

@@ -10,6 +10,17 @@
   %b Body:
   = @item.body
 
-.div
+%div
   - @item.tags.each do |tag|
     = link_to tag.name, tag_url(tag)
+
+- @item.comments.each do |comment|
+  %div
+    = comment.user.screen_name
+  %div
+    = comment.body
+  %div
+    = link_to '編集', comment_edit_path(@item.user.screen_name, @item.draft.hashid, comment)
+    = link_to '削除', comment_destroy_path(@item.user.screen_name, @item.draft.hashid, comment), method: :delete
+
+= render 'comments/form', path: comments_path(@item.user.screen_name, @item.draft.hashid, @comment)
