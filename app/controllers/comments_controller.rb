@@ -8,7 +8,8 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
     @comment.user_id = current_user.id
-    @item = User.find_by!(screen_name: params[:screen_name]).drafts.find_by_hashid(params[:item_id]).item
+    # items/show に飛ばすため、@item も用意する
+    @item = Item.get_item(params[:screen_name], params[:item_id])
     @comment.item_id = @item.id
 
     if @comment.save
@@ -20,7 +21,7 @@ class CommentsController < ApplicationController
 
   def update
     if @comment.update(comment_params)
-      redirect_to @comment, notice: 'Comment was successfully updated.'
+      redirect_to @comment.item, notice: 'コメントを更新しました。'
     else
       render :edit
     end
@@ -28,7 +29,8 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment.destroy
-    redirect_to comments_url, notice: 'Comment was successfully destroyed.'
+    # destroy しても @comment.item でいける
+    redirect_to @comment.item, notice: 'コメントを削除しました。'
   end
 
   private

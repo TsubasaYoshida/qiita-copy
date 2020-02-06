@@ -1,1 +1,1 @@
-= render 'form'
+= render 'form', path: comment_update_path(@comment.item.user.screen_name, @comment.item.draft.hashid, @comment)
