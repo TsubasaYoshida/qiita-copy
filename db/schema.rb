@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_04_145411) do
+ActiveRecord::Schema.define(version: 2020_02_07_140347) do
 
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -57,6 +57,15 @@ ActiveRecord::Schema.define(version: 2020_02_04_145411) do
     t.index ["tag_id"], name: "index_items_tags_on_tag_id"
   end
 
+  create_table "likes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "item_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["item_id"], name: "index_likes_on_item_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -80,4 +89,6 @@ ActiveRecord::Schema.define(version: 2020_02_04_145411) do
   add_foreign_key "items", "users"
   add_foreign_key "items_tags", "items"
   add_foreign_key "items_tags", "tags"
+  add_foreign_key "likes", "items"
+  add_foreign_key "likes", "users"
 end

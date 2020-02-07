@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :likes
   # users
   resources :users, only: [:new, :create, :destroy]
   get ':screen_name', to: 'users#show'
