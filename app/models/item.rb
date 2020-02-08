@@ -2,6 +2,8 @@ class Item < ApplicationRecord
   belongs_to :user
   belongs_to :draft
   has_many :comments, dependent: :destroy
+  has_many :likes, dependent: :destroy
+  has_many :users, through: :likes
   has_and_belongs_to_many :tags
 
   def self.get_item(screen_name, draft_id)

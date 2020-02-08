@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :likes
   # users
   resources :users, only: [:new, :create, :destroy]
   get ':screen_name', to: 'users#show'
@@ -20,6 +19,10 @@ Rails.application.routes.draw do
 
   # tags
   get 'tags/:name', to: 'tags#show'
+
+  # likes
+  post ':screen_name/items/:draft_id/likes', to: 'likes#create', as: :likes
+  delete ':screen_name/items/:draft_id/likes/:id', to: 'likes#destroy', as: :like_destroy
 
   # root
   root to: 'home#index'

@@ -24,3 +24,13 @@
     = link_to '削除', comment_destroy_path(@item.user.screen_name, @item.draft.hashid, comment), method: :delete
 
 = render 'comments/form', path: comments_path(@item.user.screen_name, @item.draft.hashid, @comment)
+
+%div
+  - if @like.persisted?
+    = button_to 'いいね取消', like_destroy_path(@item.user.screen_name, @item.draft.hashid, @like), method: :delete
+  - elsif @like.my_item?
+    %button{type: 'button', disabled: true}
+      いいね
+  - else
+    = simple_form_for(@like, url: likes_path(@item.user.screen_name, @item.draft.hashid, @like)) do |f|
+      = f.button :submit, 'いいね'
