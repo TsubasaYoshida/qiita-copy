@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
-  # users
-  resources :users, only: [:new, :create, :destroy]
-  get ':screen_name', to: 'users#show'
-  get '/deactivate', to: 'users#destroy'
-
   # drafts
   resources :drafts
+
+  # users
+  get '/signup', to: 'users#new'
+  get ':screen_name', to: 'users#show', as: :user
+  post '/registration', to: 'users#create', as: :users
+  get '/deactivate', to: 'users#destroy'
 
   # items
   get ':screen_name/items/:id', to: 'items#show'

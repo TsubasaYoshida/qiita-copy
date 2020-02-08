@@ -1,18 +1,47 @@
 !!!
 %html
   %head
-    %title AppName
+    %title Ciita
     = csrf_meta_tags
     = csp_meta_tag
     %meta{charset: 'utf-8'}/
     %meta{'http-equiv': 'X-UA-Compatible', content: 'IE=edge'}/
     %meta{name: 'viewport', content: 'width=device-width, initial-scale=1'}/
     %meta{'http-equiv': 'content-language', content: 'ja'}/
+    %script{src: 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js'}
     /[if lt IE 9]
       %script{src: 'https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js'}
       %script{src: 'https://oss.maxcdn.com/respond/1.4.2/respond.min.js'}
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
 
   %body
-    = yield
+    %header.header
+      .header__container
+        %nav.header__nav
+          .header__app-name-hamburger-wrapper
+            %h1.header__app-name
+              = link_to 'Ciita', root_path
+            .header__hamburger
+              %span.header__hamburger-icon
+              %span.header__hamburger-icon
+              %span.header__hamburger-icon
+          .header__menu
+            %ul
+              %li.header__menu-li
+                = link_to '投稿する', new_draft_path
+              %li.header__menu-li
+                = link_to 'マイページ', user_path(current_user.screen_name)
+              %li.header__menu-li
+                = link_to '下書き一覧', drafts_path
+              -# TODO implement
+              %li.header__menu-li
+                = link_to '設定'
+              -# TODO implement
+              %li.header__menu-li
+                = link_to 'ログアウト'
+    %main.main
+      .main-container
+        = yield
+    %footer.footer
+      &#169; #{Time.now.year} Ciita
