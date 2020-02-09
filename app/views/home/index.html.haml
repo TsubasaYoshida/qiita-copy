@@ -1,3 +1,63 @@
-= notice if notice
-
-= link_to 'アカウントを削除する', '/deactivate', data: { confirm: '一度アカウントを削除すると、二度と元に戻せませんが、よろしいですか？' }
+.home-main
+  .item-header
+    %span.item-header__icon
+      = icon('fas', 'list')
+    記事一覧
+  - @items.each do |item|
+    .item
+      .item__title
+        = link_to item.title, item_url(item)
+      .item__meta
+        by
+        = link_to item.user.screen_name, user_path(item.user.screen_name)
+        = "#{time_ago_in_words(item.created_at)} ago"
+        = icon('fas', 'thumbs-up', class: "#{'item__thumbs-up-pressed' if pressed_like?(item)}")
+        = item.likes.size
+.home-aside
+  .user-info
+    .user-info__header
+      = link_to "@#{current_user.screen_name}", user_path(current_user.screen_name)
+    .user-info__stats
+      .user-info__stats-item
+        .user-info__stats-count
+          = link_to current_user.items.size, user_path(current_user.screen_name)
+        .user-info__stats-label
+          記事
+      .user-info__stats-item
+        .user-info__stats-count
+          = link_to get_contribution(current_user.screen_name), user_path(current_user.screen_name)
+        .user-info__stats-label
+          Contribution
+      .user-info__stats-item
+        .user-info__stats-count
+          = link_to 2, user_path(current_user.screen_name)
+        .user-info__stats-label
+          フォロワー
+  .contribution-ranking
+    .contribution-ranking__header
+      ユーザーランキング
+    - get_contribution_ranking.each.with_index(1) do |(screen_name, contribution), index|
+      .contribution-ranking__data
+        .contribution-ranking__rank
+          = convert_to_trophy(index)
+        .contribution-ranking__screen-name
+          = link_to "@#{screen_name}", user_path(screen_name)
+        .contribution-ranking__contribution-info
+          .contribution-ranking__contribution-count
+            = contribution
+          .contribution-ranking__contribution-label
+            Contributions
+  .tag-ranking
+    .tag-ranking__header
+      タグ・ランキング
+    - get_tag_ranking.each.with_index(1) do |(tag_name, posts_count), index|
+      .tag-ranking__data
+        .tag-ranking__rank
+          = convert_to_trophy(index)
+        .tag-ranking__screen-name
+          = link_to tag_name, tag_path(tag_name)
+        .tag-ranking__tag-info
+          .tag-ranking__tag-count
+            = posts_count
+          .tag-ranking__tag-label
+            Posts

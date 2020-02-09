@@ -18,7 +18,7 @@ class UsersController < ApplicationController
       # セッション固定攻撃への対策
       reset_session
       session[:user_id] = @user.id
-      redirect_to home_index_url, notice: 'ユーザー登録が完了しました。'
+      redirect_to :root, notice: 'ユーザー登録が完了しました。'
     else
       render :new
     end

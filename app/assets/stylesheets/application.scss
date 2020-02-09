@@ -13,3 +13,352 @@
  *= require_tree .
  *= require_self
  */
+@import 'font-awesome-sprockets';
+@import 'font-awesome';
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: -apple-system, Segoe UI, Helvetica Neue, Hiragino Kaku Gothic ProN, "メイリオ", meiryo, sans-serif;
+  font-size: 1.4rem;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.all-wrapper {
+  background-color: #f6f6f4;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  background-color: #55c500;
+  height: 56px;
+  line-height: 56px;
+  &__container {
+    max-width: 1100px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  &__nav {
+    @media screen and (min-width: 1024px) {
+      display: flex;
+    }
+  }
+  &__app-name-hamburger-wrapper {
+    display: flex;
+    align-items: center;
+    @media screen and (max-width: 1023px) {
+      margin: 0 20px;
+    }
+  }
+  &__app-name {
+    font-size: 3rem;
+    letter-spacing: 2px;
+    a {
+      color: #FFF;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+  &__hamburger {
+    margin-left: auto;
+    &-icon {
+      position: relative;
+      display: block;
+      height: 2px;
+      width: 25px;
+      background: #FFF;
+      -webkit-transition: ease .5s;
+      transition: ease .5s;
+      &:nth-child(1) {
+        top: 0;
+      }
+      &:nth-child(2) {
+        margin: 6px 0;
+      }
+      &:nth-child(3) {
+        top: 0;
+      }
+    }
+    &.open {
+      .header__hamburger-icon:nth-child(1) {
+        top: 8px;
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+      }
+      .header__hamburger-icon:nth-child(2) {
+        opacity: 0;
+      }
+      .header__hamburger-icon:nth-child(3) {
+        top: -8px;
+        -webkit-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+      }
+    }
+    @media screen and (min-width: 1024px) {
+      display: none;
+    }
+  }
+  &__menu {
+    &.open {
+      -webkit-transform: translateX(0);
+      transform: translateX(0);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    @media screen and (max-width: 1023px) {
+      padding: 16px 8px 0 8px;
+      -webkit-transform: translateX(-100%);
+      transform: translateX(-100%);
+    }
+    @media screen and (min-width: 1024px) {
+      margin-left: auto;
+    }
+  }
+  &__menu-li {
+    @media screen and (max-width: 1023px) {
+      background-color: #FFFFFF;
+      font-size: 1.2rem;
+      line-height: 40px;
+      padding: 0 5px 0 10px;
+      border-bottom: 1px solid #DDD;
+      &:last-child {
+        border-bottom: none;
+      }
+      a {
+        color: #555;
+      }
+    }
+    @media screen and (min-width: 1024px) {
+      display: inline-block;
+      margin: 0 10px;
+      a {
+        color: #FFF;
+      }
+    }
+  }
+}
+
+.main {
+  background-color: #f6f6f4;
+  &.open {
+    margin-bottom: -9999px;
+  }
+}
+
+.main-container {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+  max-width: 1100px;
+  margin-right: auto;
+  margin-left: auto;
+  &.open {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+  @media screen and (max-width: 1023px) {
+    padding: 16px 8px 64px 8px;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  @media screen and (min-width: 1024px) {
+    padding: 32px 0 64px;
+  }
+}
+
+.home-main {
+  background-color: #fff;
+  flex-grow: 1;
+  @media screen and (max-width: 1023px) {
+    margin-bottom: 24px;
+  }
+}
+
+.home-aside {
+  width: 300px;
+  @media screen and (min-width: 1024px) {
+    margin-left: 16px;
+  }
+}
+
+.item-header {
+  font-size: 1.6rem;
+  line-height: 1;
+  padding: 16px;
+  border-bottom: 1px solid #e8e8e8;
+  &__icon {
+    margin-right: 5px;
+  }
+}
+
+.item {
+  border-bottom: 1px solid #e8e8e8;
+  min-height: 42px;
+  padding: 16px;
+  &__title {
+    font-weight: 700;
+    font-size: 1.6rem;
+    line-height: 1.4;
+    margin-bottom: 4px;
+    a {
+      color: #333;
+    }
+  }
+  &__meta {
+    color: #999;
+    font-size: .9em;
+    a {
+      color: #999;
+    }
+  }
+  &__thumbs-up-pressed {
+    color: #55c500;
+  }
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.user-info {
+  line-height: 1.4;
+  background-color: #fff;
+  margin-bottom: 16px;
+  &__header {
+    font-size: 1.6rem;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 16px;
+    a {
+      color: #333;
+    }
+  }
+  &__stats {
+    display: flex;
+  }
+  &__stats-item {
+    flex: 1 1;
+    text-align: center;
+    border-left: 1px solid #e8e8e8;
+    padding: 8px 0;
+    &:first-child {
+      border-left: none;
+    }
+  }
+  &__stats-count {
+    font-size: 1.3em;
+    color: #333;
+  }
+  &__stats-label {
+    font-size: .8em;
+    color: #888;
+  }
+}
+
+.contribution-ranking {
+  background-color: #fff;
+  margin-bottom: 16px;
+  padding: 16px;
+  &__header {
+    font-size: 1.4rem;
+    margin-bottom: 16px;
+  }
+  &__data {
+    line-height: 33px;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__rank {
+    width: 32px;
+    margin-right: 8px;
+    padding: 0 16px 0 4px;
+    font-size: 1.8rem;
+    color: #999;
+    text-align:center;
+  }
+  &__trophy {
+    &--gold {
+      font-size: 1.6rem;
+      color: #ffc400;
+    }
+    &--silver {
+      font-size: 1.6rem;
+      color: #c9c9c9;
+    }
+    &--bronze {
+      font-size: 1.6rem;
+      color: #ac6d4d;
+    }
+  }
+  &__screen-name {
+    a {
+      color: #333;
+    }
+  }
+  &__contribution-info {
+    margin-left: auto;
+  }
+  &__contribution-count {
+    line-height: 1.2;
+    color: #333;
+    font-weight: 700;
+    font-size: 1.6rem;
+    text-align: center;
+  }
+  &__contribution-label {
+    line-height: 1.2;
+    color: #999;
+    font-size: 1rem;
+  }
+}
+
+.footer {
+  background-color: #3e3e3e;
+  margin-top: auto;
+  padding: 32px 16px;
+  color: #fff;
+  &-container {
+    max-width: 980px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  &__app-name {
+    font-size: 4rem;
+    letter-spacing: 2px;
+  }
+  &__catchcopy {
+    font-size: 1.4rem;
+    margin: 16px 0 0 2px;
+  }
+  &__copyright {
+    margin: 32px 0 0 2px;
+    color: #b3b3b3;
+    font-size: 1.2rem;
+  }
+  &.open {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+  @media screen and (max-width: 1023px) {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
