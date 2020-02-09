@@ -224,6 +224,9 @@ a {
       color: #999;
     }
   }
+  &__thumbs-up-pressed {
+    color: #55c500;
+  }
   &:last-child {
     border-bottom: none;
   }
@@ -260,6 +263,65 @@ a {
   &__stats-label {
     font-size: .8em;
     color: #888;
+  }
+}
+
+.contribution-ranking {
+  background-color: #fff;
+  margin-bottom: 16px;
+  padding: 16px;
+  &__header {
+    font-size: 1.4rem;
+    margin-bottom: 16px;
+  }
+  &__data {
+    line-height: 33px;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__rank {
+    margin-right: 8px;
+    padding: 0 16px;
+    font-size: 1.8rem;
+    color: #999;
+  }
+  &__trophy {
+    &--gold {
+      font-size: 1.6rem;
+      color: #ffc400;
+    }
+    &--silver {
+      font-size: 1.6rem;
+      color: #c9c9c9;
+    }
+    &--bronze {
+      font-size: 1.6rem;
+      color: #ac6d4d;
+    }
+  }
+  &__screen-name {
+    a {
+      color: #333;
+    }
+  }
+  &__contribution-info {
+    margin-left: auto;
+  }
+  &__contribution-count {
+    line-height: 1.2;
+    color: #333;
+    font-weight: 700;
+    font-size: 1.6rem;
+    text-align: center;
+  }
+  &__contribution-label {
+    line-height: 1.2;
+    color: #999;
+    font-size: 1rem;
   }
 }
 

@@ -11,7 +11,7 @@
         by
         = link_to item.user.screen_name, user_path(item.user.screen_name)
         = "#{time_ago_in_words(item.created_at)} ago"
-        = icon('fas', 'thumbs-up')
+        = icon('fas', 'thumbs-up', class: "#{'item__thumbs-up-pressed' if pressed_like?(item)}")
         = item.likes.size
 .home-aside
   .user-info
@@ -25,7 +25,7 @@
           記事
       .user-info__stats-item
         .user-info__stats-count
-          = link_to 16, user_path(current_user.screen_name)
+          = link_to get_contribution(current_user.screen_name), user_path(current_user.screen_name)
         .user-info__stats-label
           Contribution
       .user-info__stats-item
@@ -33,4 +33,18 @@
           = link_to 2, user_path(current_user.screen_name)
         .user-info__stats-label
           フォロワー
+  .contribution-ranking
+    .contribution-ranking__header
+      ユーザーランキング
+    - get_contribution_ranking.each.with_index(1) do |(screen_name, contribution), index|
+      .contribution-ranking__data
+        .contribution-ranking__rank
+          = convert_to_trophy(index)
+        .contribution-ranking__screen-name
+          = link_to "@#{screen_name}", user_path(screen_name)
+        .contribution-ranking__contribution-info
+          .contribution-ranking__contribution-count
+            = contribution
+          .contribution-ranking__contribution-label
+            Contributions
 
