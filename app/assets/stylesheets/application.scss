@@ -284,10 +284,12 @@ a {
     justify-content: space-between;
   }
   &__rank {
+    width: 32px;
     margin-right: 8px;
-    padding: 0 16px;
+    padding: 0 16px 0 4px;
     font-size: 1.8rem;
     color: #999;
+    text-align:center;
   }
   &__trophy {
     &--gold {

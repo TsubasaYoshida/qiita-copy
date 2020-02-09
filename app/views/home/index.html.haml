@@ -47,4 +47,17 @@
             = contribution
           .contribution-ranking__contribution-label
             Contributions
-
+  .tag-ranking
+    .tag-ranking__header
+      タグ・ランキング
+    - get_tag_ranking.each.with_index(1) do |(tag_name, posts_count), index|
+      .tag-ranking__data
+        .tag-ranking__rank
+          = convert_to_trophy(index)
+        .tag-ranking__screen-name
+          = link_to tag_name, tag_path(tag_name)
+        .tag-ranking__tag-info
+          .tag-ranking__tag-count
+            = posts_count
+          .tag-ranking__tag-label
+            Posts

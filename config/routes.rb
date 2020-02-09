@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   delete ':screen_name/items/:item_id/comments/:id', to: 'comments#destroy', as: :comment_destroy
 
   # tags
-  get 'tags/:name', to: 'tags#show'
+  get 'tags/:name', to: 'tags#show', as: :tag
 
   # likes
   post ':screen_name/items/:draft_id/likes', to: 'likes#create', as: :likes

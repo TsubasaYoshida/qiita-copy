@@ -1,0 +1,61 @@
+.tag-ranking {
+  background-color: #fff;
+  margin-bottom: 16px;
+  padding: 16px;
+  &__header {
+    font-size: 1.4rem;
+    margin-bottom: 16px;
+  }
+  &__data {
+    line-height: 32px;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__rank {
+    width: 32px;
+    margin-right: 8px;
+    padding: 0 16px 0 4px;
+    font-size: 1.8rem;
+    color: #999;
+    text-align:center;
+  }
+  &__trophy {
+    &--gold {
+      font-size: 1.6rem;
+      color: #ffc400;
+    }
+    &--silver {
+      font-size: 1.6rem;
+      color: #c9c9c9;
+    }
+    &--bronze {
+      font-size: 1.6rem;
+      color: #ac6d4d;
+    }
+  }
+  &__screen-name {
+    a {
+      color: #333;
+    }
+  }
+  &__tag-info {
+    margin-right: 16px;
+    margin-left: auto;
+  }
+  &__tag-count {
+    line-height: 1.2;
+    color: #333;
+    font-weight: 700;
+    font-size: 1.6rem;
+    text-align: center;
+  }
+  &__tag-label {
+    line-height: 1.2;
+    color: #999;
+    font-size: 1rem;
+  }
+}
