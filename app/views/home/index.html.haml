@@ -1,9 +1,13 @@
 .home-main
+  .item-header
+    %span.item-header__icon
+      = icon('fas', 'list')
+    記事一覧
   - @items.each do |item|
-    .item-index
-      .item-index__title
+    .item
+      .item__title
         = link_to item.title, item_url(item)
-      .item-index__meta
+      .item__meta
         by
         = link_to item.user.screen_name, user_path(item.user.screen_name)
         = "#{time_ago_in_words(item.created_at)} ago"
