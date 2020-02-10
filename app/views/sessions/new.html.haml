@@ -1,0 +1,12 @@
+%div
+  Ciita にログイン
+
+- if flash[:danger]
+  %div
+    = flash[:danger]
+
+%div
+  = simple_form_for(:session, url: login_path) do |f|
+    = f.input :email, label: false
+    = f.input :password, label: false
+    = f.button :submit, 'ログイン'
