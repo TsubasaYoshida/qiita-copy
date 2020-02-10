@@ -2,6 +2,11 @@ Rails.application.routes.draw do
   # drafts
   resources :drafts
 
+  # login
+  get 'login', to: 'sessions#new'
+  post 'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy'
+
   # users
   get '/signup', to: 'users#new'
   get ':screen_name', to: 'users#show', as: :user
