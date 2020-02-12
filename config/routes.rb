@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   get ':screen_name', to: 'users#show', as: :user
   post '/registration', to: 'users#create', as: :users
   get '/deactivate', to: 'users#destroy'
+  get 'settings/profile', to: 'users#profile'
+  put 'settings/profile', to: 'users#profile_update'
 
   # items
   get ':screen_name/items/:id', to: 'items#show'

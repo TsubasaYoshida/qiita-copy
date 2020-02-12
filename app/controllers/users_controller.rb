@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :check_logged_in, only: [:show, :new, :create]
+  before_action :set_current_user, only: [:profile, :profile_update]
 
   def show
     # ヒットしなかったら404にしたい
@@ -30,7 +31,23 @@ class UsersController < ApplicationController
     redirect_to '/', notice: '退会処理が完了しました。'
   end
 
+  def profile
+  end
+
+  def profile_update
+    if @user.update(user_params)
+      redirect_to settings_profile_url, notice: 'プロフィールを更新しました。'
+    else
+      render :profile
+    end
+  end
+
   private
+
+  def set_current_user
+    # @user = current_user だとビューでcurrent_userを使うとき、@userの内容を参照してしまうためNG
+    @user = User.find(current_user.id)
+  end
 
   def user_params
     params.require(:user).permit(:screen_name, :email, :password)
