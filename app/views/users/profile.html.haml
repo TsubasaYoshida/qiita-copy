@@ -1,0 +1,15 @@
+%div
+  = link_to "#{current_user.screen_name} アカウント", user_path(current_user.screen_name)
+  \/
+  プロフィール編集
+
+- if flash[:notice]
+  %div
+    = flash[:notice]
+
+%div
+  -# Qiitaがputだったため、学習も兼ねてあえてputにしている(patchなら明示不要)
+  = simple_form_for(@user, url: settings_profile_path, method: 'put') do |f|
+    = f.input :screen_name, label: false
+    = f.input :email, label: false
+    = f.button :submit, '更新する'

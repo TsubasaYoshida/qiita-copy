@@ -11,13 +11,16 @@ class User < ApplicationRecord
   validates :screen_name,
             presence: true,
             length: {maximum: 20},
-            uniqueness: true
+            # MySQLの場合、大文字小文字を区別するかについて明示する必要がある(Rails6.1から)。
+            uniqueness: {case_sensitive: false}
   validates :email,
             presence: true,
             length: {maximum: 255},
             format: {with: VALID_EMAIL_REGEX},
-            uniqueness: true
+            uniqueness: {case_sensitive: false}
   validates :password,
             presence: true,
-            length: {minimum: 6}
+            length: {minimum: 6},
+            # 新規作成時のみバリデーションする
+            on: :create
 end
