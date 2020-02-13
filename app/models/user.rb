@@ -7,6 +7,8 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
 
+  attr_accessor :old_password
+
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :screen_name,
             presence: true,
@@ -21,6 +23,10 @@ class User < ApplicationRecord
   validates :password,
             presence: true,
             length: {minimum: 6},
-            # 新規作成時のみバリデーションする
-            on: :create
+            # サインアップ時と、パスワードリセット時のみバリデーションする
+            on: [:create, :password_reset]
+  validates :old_password,
+            presence: true,
+            length: {minimum: 6},
+            on: :password_reset
 end
