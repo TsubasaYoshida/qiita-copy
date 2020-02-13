@@ -25,8 +25,16 @@ class User < ApplicationRecord
             length: {minimum: 6},
             # サインアップ時と、パスワードリセット時のみバリデーションする
             on: [:create, :password_reset]
-  validates :old_password,
-            presence: true,
-            length: {minimum: 6},
-            on: :password_reset
+  validate :old_password_authenticate,
+           on: :password_reset
+
+  private
+
+  # 旧パスワードの認証
+  def old_password_authenticate
+    # self.authenticate(old_password)だと認証OKにならないので一生バリデーション通らない(原因不明)
+    # 仕方ないのでuserを持ってくる
+    user = User.find(self.id)
+    errors.add(:old_password, '現在のパスワードが間違っています。') unless user.authenticate(old_password)
+  end
 end
