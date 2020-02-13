@@ -7,6 +7,8 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
 
+  attr_accessor :old_password
+
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :screen_name,
             presence: true,
@@ -21,6 +23,18 @@ class User < ApplicationRecord
   validates :password,
             presence: true,
             length: {minimum: 6},
-            # 新規作成時のみバリデーションする
-            on: :create
+            # サインアップ時と、パスワードリセット時のみバリデーションする
+            on: [:create, :password_reset]
+  validate :old_password_authenticate,
+           on: :password_reset
+
+  private
+
+  # 旧パスワードの認証
+  def old_password_authenticate
+    # self.authenticate(old_password)だと認証OKにならないので一生バリデーション通らない(原因不明)
+    # 仕方ないのでuserを持ってくる
+    user = User.find(self.id)
+    errors.add(:old_password, '現在のパスワードが間違っています。') unless user.authenticate(old_password)
+  end
 end
