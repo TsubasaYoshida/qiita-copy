@@ -259,7 +259,9 @@ a {
   }
   &__stats-count {
     font-size: 1.3em;
-    color: #333;
+    a {
+      color: #333;
+    }
   }
   &__stats-label {
     font-size: .8em;
@@ -290,7 +292,7 @@ a {
     padding: 0 16px 0 4px;
     font-size: 1.8rem;
     color: #999;
-    text-align:center;
+    text-align: center;
   }
   &__trophy {
     &--gold {

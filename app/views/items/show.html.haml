@@ -1,36 +1,76 @@
-%p#notice= notice
+.item-article
+  .item-article__header
+    .item-article__header-info
+      .item-article__header-author
+        = link_to "@#{@item.user.screen_name}", user_path(@item.user.screen_name)
+      .item-article__header-time
+        = get_item_time(@item)
+      - if my_item?(@item)
+        .item-article__header-meta
+          .item-article__header-edit
+            = link_to edit_draft_path do
+              = icon('fas', 'pencil-alt')
+              = '編集する'
+          .item-article__header-delete
+            = link_to item_destroy_path, method: :delete, data: { confirm: '本当に削除してもよろしいですか？' } do
+              = icon('fas', 'trash-alt')
+              = '削除する'
+    .item-article__header-title
+      = @item.title
+    .item-article__header-tags-wrapper
+      - @item.tags.each do |tag|
+        = link_to tag.name, tag_url(tag), class: 'item-article__header-tag'
 
-%p
-  %b User:
-  = @item.user.screen_name
-%p
-  %b Title:
-  = @item.title
-%p
-  %b Body:
-  = @item.body
+  .item-article__body
+    = markdown @item.body
 
-%div
-  - @item.tags.each do |tag|
-    = link_to tag.name, tag_url(tag)
+  .item-article__footer
+    .item-article__footer-like-wrapper
+      - if @like.persisted?
+        = button_to like_destroy_path(@item.user.screen_name, @item.draft.hashid, @like), method: :delete do
+          = icon('fas', 'check', class: 'item__thumbs-up-pressed')
+          いいね済み
+        .item-article__footer-like-count
+          = @item.likes.size
+      - elsif @like.my_item?
+        .item-article__footer-like-my-item
+          %button{type: 'button', disabled: true}
+            = icon('fas', 'thumbs-up')
+            いいね
+          .item-article__footer-like-count-my-item
+            = @item.likes.size
+      - else
+        = button_to likes_path(@item.user.screen_name, @item.draft.hashid, @like) do
+          = icon('fas', 'thumbs-up', class: 'item__thumbs-up-pressed')
+          いいね
+        .item-article__footer-like-count
+          = @item.likes.size
 
-- @item.comments.each do |comment|
-  %div
-    = comment.user.screen_name
-  %div
-    = comment.body
-  %div
-    = link_to '編集', comment_edit_path(@item.user.screen_name, @item.draft.hashid, comment)
-    = link_to '削除', comment_destroy_path(@item.user.screen_name, @item.draft.hashid, comment), method: :delete
+.comment-all-wrapper
+  .comment__header
+    = icon('fas', 'comments')
+    コメント
+  - @item.comments.each do |comment|
+    .comment__item
+      .comment__header-info
+        .comment__header-author
+          = link_to "@#{comment.user.screen_name}", user_path(comment.user.screen_name)
+        .comment__header-time
+          = l comment.updated_at, format: :long
+        - if my_comment?(comment)
+          .comment__header-meta
+            .comment__header-edit
+              = link_to comment_edit_path(@item.user.screen_name, @item.draft.hashid, comment) do
+                = icon('fas', 'pencil-alt')
+                = '編集する'
+            .comment__header-delete
+              = link_to comment_destroy_path(@item.user.screen_name, @item.draft.hashid, comment), method: :delete, data: { confirm: '本当に削除してもよろしいですか？' } do
+                = icon('fas', 'trash-alt')
+                = '削除する'
+      .comment__body
+        = simple_format comment.body
 
-= render 'comments/form', path: comments_path(@item.user.screen_name, @item.draft.hashid, @comment)
-
-%div
-  - if @like.persisted?
-    = button_to 'いいね取消', like_destroy_path(@item.user.screen_name, @item.draft.hashid, @like), method: :delete
-  - elsif @like.my_item?
-    %button{type: 'button', disabled: true}
-      いいね
-  - else
-    = simple_form_for(@like, url: likes_path(@item.user.screen_name, @item.draft.hashid, @like)) do |f|
-      = f.button :submit, 'いいね'
+  .comment-new
+    .comment-new-header
+      コメントを投稿する
+    = render 'comments/form', path: comments_path(@item.user.screen_name, @item.draft.hashid, @comment)
