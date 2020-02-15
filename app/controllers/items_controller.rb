@@ -4,7 +4,8 @@ class ItemsController < ApplicationController
 
   def show
     @comment = Comment.new
-    @like = Like.find_or_initialize_by(user_id: current_user.id, item_id: @item.id)
+    # 未ログイン状態でも呼ばれるため、lonely-operatorを使用する
+    @like = Like.find_or_initialize_by(user_id: current_user&.id, item_id: @item.id)
   end
 
   def destroy

@@ -8,6 +8,7 @@ module ItemsHelper
   end
 
   def my_item?(item)
-    Item.exists?(id: item.id, user_id: current_user.id)
+    # 未ログイン状態でも呼ばれるため、lonely-operatorを使用する
+    Item.exists?(id: item.id, user_id: current_user&.id)
   end
 end
