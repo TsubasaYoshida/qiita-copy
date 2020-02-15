@@ -13,26 +13,10 @@
         = "#{time_ago_in_words(item.created_at)} ago"
         = icon('fas', 'thumbs-up', class: "#{'item__thumbs-up-pressed' if pressed_like?(item)}")
         = item.likes.size
+
 .home-aside
-  .user-info
-    .user-info__header
-      = link_to "@#{current_user.screen_name}", user_path(current_user.screen_name)
-    .user-info__stats
-      .user-info__stats-item
-        .user-info__stats-count
-          = link_to current_user.items.size, user_path(current_user.screen_name)
-        .user-info__stats-label
-          記事
-      .user-info__stats-item
-        .user-info__stats-count
-          = link_to get_contribution(current_user.screen_name), user_path(current_user.screen_name)
-        .user-info__stats-label
-          Contribution
-      .user-info__stats-item
-        .user-info__stats-count
-          = link_to 2, user_path(current_user.screen_name)
-        .user-info__stats-label
-          フォロワー
+  = render 'user_info' if current_user
+
   .contribution-ranking
     .contribution-ranking__header
       ユーザーランキング
@@ -47,6 +31,7 @@
             = contribution
           .contribution-ranking__contribution-label
             Contributions
+
   .tag-ranking
     .tag-ranking__header
       タグ・ランキング

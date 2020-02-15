@@ -1,0 +1,19 @@
+.user-info
+  .user-info__header
+    = link_to "@#{current_user.screen_name}", user_path(current_user.screen_name)
+  .user-info__stats
+    .user-info__stats-item
+      .user-info__stats-count
+        = link_to current_user.items.size, user_path(current_user.screen_name)
+      .user-info__stats-label
+        記事
+    .user-info__stats-item
+      .user-info__stats-count
+        = link_to get_contribution(current_user.screen_name), user_path(current_user.screen_name)
+      .user-info__stats-label
+        Contribution
+    .user-info__stats-item
+      .user-info__stats-count
+        = link_to 2, user_path(current_user.screen_name)
+      .user-info__stats-label
+        フォロワー
