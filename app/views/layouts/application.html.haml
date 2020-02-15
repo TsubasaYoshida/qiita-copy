@@ -16,7 +16,7 @@
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
 
   %body
-    - if @path.in?(['sessions#new','users#new'])
+    - if @path.in?(%w(sessions#new users#new))
       = yield
     - else
       .all-wrapper
