@@ -7,10 +7,6 @@
       Ciita にログイン
 
     .login-form
-      - if flash[:danger]
-        %div
-          = flash[:danger]
-
       = simple_form_for(:session, url: login_path) do |f|
         .form-group
           = f.input :email, label: false, placeholder: 'メールアドレス', input_html: {class: 'form-control'}

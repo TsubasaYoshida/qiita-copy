@@ -1,4 +1,4 @@
-.login-all-wrapper {
+.signup-all-wrapper {
   margin-right: auto;
   margin-left: auto;
   padding-left: 10px;
@@ -7,7 +7,7 @@
   width: 1160px;
 }
 
-.login-logo {
+.signup-logo {
   background-color: #59bb0c;
   height: 29px;
   width: 96px;
@@ -20,20 +20,26 @@
   text-align: center;
 }
 
-.login-container {
+.signup-container {
   margin: 0 auto;
   width: 50%;
   text-align: center;
 }
 
-.login-title {
+.signup-title {
   margin: 30px 0;
   letter-spacing: 1px;
   font-size: 36px;
   font-weight: 400;
 }
 
-.login-form {
+.signup-lead {
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.signup-form {
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
   padding: 20px 0 5px;
@@ -41,7 +47,7 @@
   width: 350px;
 }
 
-.login-button {
+.signup-button {
   width: 100%;
   color: #fff;
   background-color: #59bb0c;
@@ -57,7 +63,7 @@
   }
 }
 
-.signup-leading {
+.login-leading {
   color: #999;
   padding-top: 20px;
   a {
