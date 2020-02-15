@@ -9,7 +9,7 @@
     .login-form
       = simple_form_for(:session, url: login_path) do |f|
         .form-group
-          = f.input :email, label: false, placeholder: 'メールアドレス', input_html: {class: 'form-control'}
+          = f.input :identity, label: false, placeholder: 'ユーザー名 または メールアドレス', input_html: {class: 'form-control'}
         .form-group
           = f.input :password, label: false, placeholder: 'パスワード', input_html: {class: 'form-control'}
         .form-group
