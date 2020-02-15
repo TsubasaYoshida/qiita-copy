@@ -45,6 +45,8 @@ group :development do
   # Better Errors
   gem 'better_errors'
   gem 'binding_of_caller'
+  # i18n_generators
+  gem 'i18n_generators'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -55,3 +57,5 @@ gem 'simple_form'
 gem 'enumerize'
 gem 'hashid-rails', '~> 1.0'
 gem 'font-awesome-sass', '~> 5.12.0'
+gem 'rouge'
+gem 'redcarpet'

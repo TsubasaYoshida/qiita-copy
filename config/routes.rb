@@ -25,7 +25,7 @@ Rails.application.routes.draw do
 
   # items
   get ':screen_name/items/:id', to: 'items#show'
-  delete ':screen_name/items/:id', to: 'items#destroy'
+  delete ':screen_name/items/:id', to: 'items#destroy', as: :item_destroy
 
   # comments
   post ':screen_name/items/:item_id/comments', to: 'comments#create', as: :comments
