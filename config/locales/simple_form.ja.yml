@@ -9,6 +9,7 @@ ja:
         screen_name: 'ユーザ名'
         email: 'メールアドレス'
         password: 'パスワード'
+        old_password: '現在のパスワード'
     placeholders:
       session:
         identity: 'ユーザー名 または メールアドレス'

@@ -1,0 +1,64 @@
+.setting-menu {
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 1em;
+  background-color: #fff;
+  padding: 16px;
+  &__item {
+    width: 100%;
+    padding: 16px 0;
+    border-top: 1px solid #e8e8e8;
+    color: #555;
+  }
+  &__item:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+  &__item:last-child {
+    padding-bottom: 0;
+  }
+  &__item--active {
+    font-weight: 700;
+  }
+}
+
+.setting-main {
+  flex-grow: 1;
+  width: 0;
+  margin-left: 16px;
+  background-color: #fff;
+  padding: 32px;
+}
+
+.setting {
+  &__form {
+    color: #555;
+    label {
+      font-weight: 700;
+    }
+  }
+  &__form-text {
+    display: block;
+    width: 100%;
+    font-size: 1.6rem;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    padding: 8px 16px;
+    margin: .6em 0 20px;
+    box-sizing: border-box;
+  }
+  &__form-submit {
+    line-height: 1.4;
+    color: #fff;
+    background-color: #55c500;
+    border: none;
+    border-radius: .2em;
+    font-size: 1.4rem;
+    padding: 8px 24px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+}
