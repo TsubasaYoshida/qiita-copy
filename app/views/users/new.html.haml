@@ -11,13 +11,13 @@
     .signup-form
       = simple_form_for @user do |f|
         .form-group
-          = f.input :screen_name, label: false, placeholder: 'ユーザ名', input_html: {class: 'form-control'}
+          = f.input :screen_name, label: false, input_html: {class: 'form-control'}
         .form-group
-          = f.input :email, label: false, placeholder: 'メールアドレス', input_html: {class: 'form-control'}
+          = f.input :email, label: false, input_html: {class: 'form-control'}
         .form-group
-          = f.input :password, label: false, placeholder: 'パスワード', input_html: {class: 'form-control'}
+          = f.input :password, label: false, input_html: {class: 'form-control'}
         .form-group
-          = f.button :submit, '登録する', class: 'signup-button'
+          = f.button :submit, class: 'signup-button'
 
     .login-leading
       もしQiitaのアカウントを持っている場合は

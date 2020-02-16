@@ -1,0 +1,19 @@
+ja:
+  helpers:
+    submit:
+      session:
+        submit: 'Ciita にログイン'
+  simple_form:
+    labels:
+      user:
+        screen_name: 'ユーザ名'
+        email: 'メールアドレス'
+        password: 'パスワード'
+    placeholders:
+      session:
+        identity: 'ユーザー名 または メールアドレス'
+        password: 'パスワード'
+      user:
+        screen_name: 'ユーザ名'
+        email: 'メールアドレス'
+        password: 'パスワード'
