@@ -76,4 +76,26 @@
       border-color: #326a07;
     }
   }
+  &-profile__deactivate {
+    margin-top: 40px;
+    border-top: 1px solid #e8e8e8;
+  }
+  &-profile__deactivate-caption {
+    margin-top: 32px;
+    font-weight: 700;
+  }
+  &-profile__deactivate-button {
+    color: #fff;
+    background-color: #e14b22;
+    border: none;
+    border-radius: .2em;
+    font-size: 1.4rem;
+    line-height: 1.4;
+    padding: 8px 24px;
+    margin-top: 10px;
+    cursor: pointer;
+    &:hover {
+      opacity: .8;
+    }
+  }
 }

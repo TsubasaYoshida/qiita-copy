@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get '/signup', to: 'users#new'
   get ':screen_name', to: 'users#show', as: :user
   post '/registration', to: 'users#create', as: :users
-  get '/deactivate', to: 'users#destroy'
+  get '/deactivate', to: 'users#destroy', as: :user_destroy
 
   get 'settings/profile', to: 'users#profile'
   put 'settings/profile', to: 'users#profile_update'

@@ -7,3 +7,8 @@
       = f.input :screen_name, placeholder: false, input_html: {class: 'setting__form-text'}
       = f.input :email, placeholder: false, input_html: {class: 'setting__form-text'}
       = f.button :submit, class: 'setting__form-submit'
+
+  .setting-profile__deactivate
+    .setting-profile__deactivate-caption
+      アカウント削除
+    = button_to 'アカウントを削除する', user_destroy_path, class: 'setting-profile__deactivate-button', data: {confirm: '一度アカウントを削除すると、二度と元に戻せませんが、よろしいですか？'}
