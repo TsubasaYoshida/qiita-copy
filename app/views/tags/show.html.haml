@@ -2,4 +2,4 @@
 
 - @tag.items.each do |item|
   .div
-    = link_to item.title, item_url(item)
+    = link_to item.title, item_path(item.user.screen_name, item.draft.hashid)

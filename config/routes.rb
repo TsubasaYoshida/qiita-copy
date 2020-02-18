@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # drafts
-  resources :drafts
+  resources :drafts, only: %i(index new edit create update destroy)
 
   # login
   get 'login', to: 'sessions#new'
@@ -19,12 +19,8 @@ Rails.application.routes.draw do
   get 'settings/password', to: 'users#password'
   put 'settings/password', to: 'users#password_update'
 
-  # get 'settings/password/reset', to: 'users#password_reset_send_mail'
-  # get 'settings/password/new', to: 'users#password_reset_new'
-  # post 'settings/password', to: 'users#password_reset_update'
-
   # items
-  get ':screen_name/items/:id', to: 'items#show'
+  get ':screen_name/items/:id', to: 'items#show', as: :item
   delete ':screen_name/items/:id', to: 'items#destroy', as: :item_destroy
 
   # comments
