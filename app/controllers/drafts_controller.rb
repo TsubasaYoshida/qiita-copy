@@ -2,10 +2,6 @@ class DraftsController < ApplicationController
   before_action :set_draft, only: [:edit, :update, :destroy]
 
   def index
-    # 未投稿のものと、投稿後に編集したもの
-    @drafts = current_user.drafts.select do |draft|
-      !draft.item || draft.edit_after_posting
-    end
   end
 
   def new
