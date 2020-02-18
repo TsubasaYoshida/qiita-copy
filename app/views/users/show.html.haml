@@ -1,15 +1,18 @@
-.div
-  @#{@user.screen_name}
+.user-show-info
+  .user-show-info__screen-name
+    @#{@user.screen_name}
+  .user-show-info__item-count<
+    = @user.items.size
+    %span.user-show-info__item-count-unit
+      Items
 
-.div
-  = @user.items.size
-  Items
-
-- @user.items.each do |item|
-  .div
-    = link_to item.title, item_url(item)
-  .div
-    = link_to 'delete', item_url(item), method: :delete
-
-%div
-  = link_to 'アカウントを削除する', '/deactivate', data: { confirm: '一度アカウントを削除すると、二度と元に戻せませんが、よろしいですか？' }
+.user-show-item
+  - @user.items.each do |item|
+    .user-show-item__one
+      .user-show-item__one-date
+        = l item.created_at, format: :item
+      .user-show-item__one-title
+        = link_to item.title, item_path(item.user.screen_name, item.draft.hashid)
+      .user-show-item__one-tag-wrapper
+        - item.tags.each do |tag|
+          = link_to tag.name, tag_path(tag.name), class: 'user-show-item__one-tag'
