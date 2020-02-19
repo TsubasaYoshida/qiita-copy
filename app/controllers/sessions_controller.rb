@@ -2,10 +2,11 @@ class SessionsController < ApplicationController
   skip_before_action :check_logged_in, only: [:new, :create]
 
   def new
+    redirect_to root_path if current_user
   end
 
   def create
-    user = User.find_by(email: session_params[:email])
+    user = User.find_by(screen_name: session_params[:identity]) || User.find_by(email: session_params[:identity])
 
     if user&.authenticate(session_params[:password])
       reset_session
@@ -25,7 +26,7 @@ class SessionsController < ApplicationController
   private
 
   def session_params
-    params.require(:session).permit(:email, :password)
+    params.require(:session).permit(:identity, :password)
   end
 
 end

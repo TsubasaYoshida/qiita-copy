@@ -50,6 +50,9 @@
   .comment__header
     = icon('fas', 'comments')
     コメント
+  - if @item.comments.size.zero?
+    .comment__message--size-zero
+      この記事にコメントはありません。
   - @item.comments.each do |comment|
     .comment__item
       .comment__header-info
@@ -71,6 +74,15 @@
         = simple_format comment.body
 
   .comment-new
-    .comment-new-header
-      コメントを投稿する
-    = render 'comments/form', path: comments_path(@item.user.screen_name, @item.draft.hashid, @comment)
+    - if current_user
+      .comment-new-header
+        コメントを投稿する
+      = render 'comments/form', path: comments_path(@item.user.screen_name, @item.draft.hashid, @comment)
+    - else
+      .comment__form--not-logged-in
+        .comment__form-title--not-logged-in
+          あなたもコメントしてみませんか :)
+        = link_to 'ユーザ登録', signup_path, class: 'comment__form-signup-button'
+        .comment__form-login-leading
+          すでにアカウントを持っている方は
+          = link_to 'ログイン', login_path

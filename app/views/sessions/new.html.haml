@@ -1,12 +1,21 @@
-%div
-  Ciita にログイン
+.login-all-wrapper
+  .login-logo
+    Ciita
 
-- if flash[:danger]
-  %div
-    = flash[:danger]
+  .login-container
+    .login-title
+      Ciita にログイン
 
-%div
-  = simple_form_for(:session, url: login_path) do |f|
-    = f.input :email, label: false
-    = f.input :password, label: false
-    = f.button :submit, 'ログイン'
+    .login-form
+      = simple_form_for(:session, url: login_path) do |f|
+        .form-group
+          = f.input :identity, label: false, input_html: {class: 'form-control'}
+        .form-group
+          = f.input :password, label: false, input_html: {class: 'form-control'}
+        .form-group
+          = f.button :submit, class: 'login-button'
+
+    .signup-leading
+      Ciita のアカウントを持っていない場合は
+      = link_to '新規登録', signup_path
+      から。

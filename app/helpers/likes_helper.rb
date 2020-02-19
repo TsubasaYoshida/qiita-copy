@@ -8,7 +8,7 @@ module LikesHelper
   end
 
   def pressed_like?(item)
-    Like.exists?(user_id: current_user.id, item_id: item.id)
+    Like.exists?(user_id: current_user.id, item_id: item.id) if current_user
   end
 
   # TODO もっとうまく書けるかもしれない...

@@ -1,15 +1,14 @@
-%div
-  = link_to "#{current_user.screen_name} アカウント", user_path(current_user.screen_name)
-  \/
-  プロフィール編集
+= render 'menu', active: 'profile'
 
-- if flash[:notice]
-  %div
-    = flash[:notice]
+.setting-main
+  .setting__form
+    -# Qiitaがputだったため、学習も兼ねてあえてputにしている(patchなら明示不要)
+    = simple_form_for(@user, url: settings_profile_path, method: 'put') do |f|
+      = f.input :screen_name, placeholder: false, input_html: {class: 'setting__form-text'}
+      = f.input :email, placeholder: false, input_html: {class: 'setting__form-text'}
+      = f.button :submit, class: 'setting__form-submit'
 
-%div
-  -# Qiitaがputだったため、学習も兼ねてあえてputにしている(patchなら明示不要)
-  = simple_form_for(@user, url: settings_profile_path, method: 'put') do |f|
-    = f.input :screen_name, label: false
-    = f.input :email, label: false
-    = f.button :submit, '更新する'
+  .setting-profile__deactivate
+    .setting-profile__deactivate-caption
+      アカウント削除
+    = button_to 'アカウントを削除する', user_destroy_path, class: 'setting-profile__deactivate-button', data: {confirm: '一度アカウントを削除すると、二度と元に戻せませんが、よろしいですか？'}

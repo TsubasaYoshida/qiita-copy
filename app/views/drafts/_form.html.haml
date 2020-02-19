@@ -1,9 +1,7 @@
-= simple_form_for(@draft) do |f|
-  = f.input :title
-  = f.input :tag_names
-  = f.input :body
-  - if @draft.edit_after_posting
-    = f.select :type, Draft::AFTER_POST, selected: 'save'
-  - else
-    = f.select :type, Draft::BEFORE_POST, selected: 'post'
-  = f.button :submit
+.setting__form
+  = simple_form_for(@draft) do |f|
+    = f.input :title, input_html: {class: 'setting__form-text'}
+    = f.input :tag_names, input_html: {class: 'setting__form-text'}
+    = f.input :body, input_html: {class: 'setting__form-textarea'}
+    = f.select :type, Draft::TYPE, {selected: "#{:save if @draft.edit_after_posting?}"}, class: 'form-control'
+    = f.button :submit, class: 'setting__form-submit'

@@ -1,0 +1,30 @@
+ja:
+  helpers:
+    submit:
+      session:
+        submit: 'Ciita にログイン'
+      draft:
+        create: '送信する'
+  simple_form:
+    labels:
+      user:
+        screen_name: 'ユーザ名'
+        email: 'メールアドレス'
+        password: 'パスワード'
+        old_password: '現在のパスワード'
+      draft:
+        title: 'タイトル'
+        tag_names: 'タグ'
+        body: '本文'
+    placeholders:
+      session:
+        identity: 'ユーザー名 または メールアドレス'
+        password: 'パスワード'
+      user:
+        screen_name: 'ユーザ名'
+        email: 'メールアドレス'
+        password: 'パスワード'
+      draft:
+        title: 'タイトル'
+        tag_names: 'プログラミング技術に関連するタグをスペース区切りで5つまで入力（例: Ruby Rails:4.2.0）'
+        body: 'プログラミング知識をMarkdown記法で書いて共有しよう'
