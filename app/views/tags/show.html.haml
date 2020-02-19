@@ -1,5 +1,22 @@
-= @tag.name
+.tag-info
+  .tag-info__name
+    = @tag.name
+  .tag-info__item-count<
+    = @tag.items.size
+    %span.tag-info__item-count-unit
+      Items
 
-- @tag.items.each do |item|
-  .div
-    = link_to item.title, item_path(item.user.screen_name, item.draft.hashid)
+.tag-item-list
+  - @tag.items.each do |item|
+    .tag-item
+      .tag-item__date
+        = l item.created_at, format: :item
+      .tag-item__title
+        = link_to item.title, item_path(item.user.screen_name, item.draft.hashid)
+      .tag-item__meta
+        .tag-item__author
+          by
+          = link_to item.user.screen_name, user_path(item.user.screen_name)
+        .tag-item__tag-wrapper
+          - item.tags.each do |tag|
+            = link_to tag.name, tag_path(tag.name), class: 'tag-item__tag'

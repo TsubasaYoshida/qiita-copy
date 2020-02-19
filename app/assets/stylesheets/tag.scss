@@ -1,0 +1,68 @@
+.tag-info {
+  background-color: #fff;
+  padding: 24px;
+  width: 280px;
+  &__name {
+    font-weight: 700;
+    font-size: 2rem;
+  }
+  &__item-count {
+    font-weight: 400;
+    font-size: 3rem;
+    margin-top: 10px;
+  }
+  &__item-count-unit {
+    color: #555;
+    font-size: 1.4rem;
+  }
+}
+
+.tag-item-list {
+  background-color: #fff;
+  padding: 32px;
+  margin-left: 16px;
+  flex-grow: 1;
+}
+
+.tag-item {
+  &:not(:last-child) {
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8e8e8;
+    margin-bottom: 12px;
+  }
+  &__date {
+    font-size: 1.2rem;
+    margin-bottom: 3px;
+  }
+  &__title {
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+    a {
+      color: #333;
+    }
+  }
+  &__meta {
+    display: flex;
+  }
+  &__author {
+    padding: 4px 0;
+    margin-right: 16px;
+    color: #999;
+    a {
+      color: #999;
+    }
+  }
+  &__tag-wrapper {
+    display: flex;
+  }
+  &__tag {
+    background-color: #eee;
+    color: #666;
+    padding: 4px 8px;
+    border-radius: 4px;
+    &:not(:last-child) {
+      margin-right: 8px;
+    }
+  }
+}
