@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   end
 
   def new
-    redirect_to root_path if current_user
+    redirect_to :root if current_user
     @user = User.new
   end
 
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
   def destroy
     current_user.destroy
     reset_session
-    redirect_to '/', notice: '退会処理が完了しました。'
+    redirect_to :root, notice: '退会処理が完了しました。'
   end
 
   def profile

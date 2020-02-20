@@ -8,10 +8,10 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
 
   # users
-  get '/signup', to: 'users#new'
+  get 'signup', to: 'users#new'
   get ':screen_name', to: 'users#show', as: :user
-  post '/registration', to: 'users#create', as: :users
-  delete '/deactivate', to: 'users#destroy', as: :user_destroy
+  post 'registration', to: 'users#create', as: :users
+  delete 'deactivate', to: 'users#destroy'
 
   get 'settings/profile', to: 'users#profile'
   put 'settings/profile', to: 'users#profile_update'
@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   put 'settings/password', to: 'users#password_update'
 
   # items
-  get ':screen_name/items/:id', to: 'items#show', as: :item
+  get ':screen_name/items/:id', to: 'items#show'
   delete ':screen_name/items/:id', to: 'items#destroy', as: :item_destroy
 
   # comments

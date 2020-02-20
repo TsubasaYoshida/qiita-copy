@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   skip_before_action :check_logged_in, only: [:new, :create]
 
   def new
-    redirect_to root_path if current_user
+    redirect_to :root if current_user
   end
 
   def create
@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
     if user&.authenticate(session_params[:password])
       reset_session
       session[:user_id] = user.id
-      redirect_to root_path, notice: 'ログインしました。'
+      redirect_to :root, notice: 'ログインしました。'
     else
       flash.now[:danger] = '入力値が誤っています。'
       render :new
@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
 
   def destroy
     reset_session
-    redirect_to root_path, notice: 'ログアウトしました。'
+    redirect_to :root, notice: 'ログアウトしました。'
   end
 
   private

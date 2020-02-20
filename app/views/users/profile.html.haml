@@ -11,4 +11,4 @@
   .setting-profile__deactivate
     .setting-profile__deactivate-caption
       アカウント削除
-    = button_to 'アカウントを削除する', user_destroy_path, method: :delete, class: 'setting-profile__deactivate-button', data: {confirm: '一度アカウントを削除すると、二度と元に戻せませんが、よろしいですか？'}
+    = button_to 'アカウントを削除する', deactivate_path, method: :delete, class: 'setting-profile__deactivate-button', data: {confirm: '一度アカウントを削除すると、二度と元に戻せませんが、よろしいですか？'}

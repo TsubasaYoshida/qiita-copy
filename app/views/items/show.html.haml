@@ -19,20 +19,20 @@
       = @item.title
     .item-article__header-tags-wrapper
       - @item.tags.each do |tag|
-        = link_to tag.name, tag_url(tag), class: 'item-article__header-tag'
+        = link_to tag.name, tag_path(tag.name), class: 'item-article__header-tag'
 
   .item-article__body
     = markdown @item.body
 
   .item-article__footer
     .item-article__footer-like-wrapper
-      - if @like.persisted?
-        = button_to like_destroy_path(@item.user.screen_name, @item.draft.hashid, @like), method: :delete do
+      - if like_instance(@item).persisted?
+        = button_to like_destroy_path(@item.user.screen_name, @item.draft.hashid, like_instance(@item)), method: :delete do
           = icon('fas', 'check', class: 'item__thumbs-up-pressed')
           いいね済み
         .item-article__footer-like-count
           = @item.likes.size
-      - elsif @like.my_item?
+      - elsif like_instance(@item).my_item?
         .item-article__footer-like-my-item
           %button{type: 'button', disabled: true}
             = icon('fas', 'thumbs-up')
@@ -40,7 +40,7 @@
           .item-article__footer-like-count-my-item
             = @item.likes.size
       - else
-        = button_to likes_path(@item.user.screen_name, @item.draft.hashid, @like) do
+        = button_to likes_path(@item.user.screen_name, @item.draft.hashid, like_instance(@item)) do
           = icon('fas', 'thumbs-up', class: 'item__thumbs-up-pressed')
           いいね
         .item-article__footer-like-count

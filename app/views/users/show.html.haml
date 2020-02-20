@@ -12,7 +12,7 @@
       .user-show-item__one-date
         = l item.created_at, format: :item
       .user-show-item__one-title
-        = link_to item.title, item_path(item.user.screen_name, item.draft.hashid)
+        = link_to item.title, item.url
       .user-show-item__one-tag-wrapper
         - item.tags.each do |tag|
           = link_to tag.name, tag_path(tag.name), class: 'user-show-item__one-tag'

@@ -1,4 +1,6 @@
 class Item < ApplicationRecord
+  include Hashid::Rails
+
   belongs_to :user
   belongs_to :draft
   has_many :comments, dependent: :destroy
@@ -29,5 +31,9 @@ class Item < ApplicationRecord
     end
 
     item
+  end
+
+  def url
+    Rails.application.routes.url_helpers.url_for(controller: :items, action: :show, screen_name: self.user.screen_name, id: self.draft.hashid, only_path: true)
   end
 end

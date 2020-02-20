@@ -24,7 +24,7 @@ class DraftsController < ApplicationController
       # TODO 本当は StringInquirer を使いたいが、うまく動かない
       if @draft.type == 'post'
         item = Item.make_copy(@draft)
-        redirect_to item_url(item.user.screen_name, @draft.hashid), notice: '記事を投稿しました。'
+        redirect_to item.url, notice: '記事を投稿しました。'
       else
         redirect_to drafts_url, notice: '下書き保存しました。'
       end
@@ -45,7 +45,7 @@ class DraftsController < ApplicationController
         message = @draft.item ? '記事を編集しました。' : '記事を投稿しました。'
         item = Item.make_copy(@draft)
         @draft.update(edit_after_posting: false)
-        redirect_to item_url(item.user.screen_name, item.draft.hashid), notice: message
+        redirect_to item.url, notice: message
       else
         redirect_to drafts_url, notice: '下書きを更新しました。'
       end

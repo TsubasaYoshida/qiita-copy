@@ -12,7 +12,7 @@
       .tag-item__date
         = l item.created_at, format: :item
       .tag-item__title
-        = link_to item.title, item_path(item.user.screen_name, item.draft.hashid)
+        = link_to item.title, item.url
       .tag-item__meta
         .tag-item__author
           by

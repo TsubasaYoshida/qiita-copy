@@ -16,5 +16,4 @@ class Like < ApplicationRecord
     # TODO もっといい書き方ありそう
     errors.add(:base, '') if my_item?
   end
-
 end
