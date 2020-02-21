@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   has_secure_password
 
-  # has_many :items, through: :likes は has_many :items, dependent: :destroy と被っているので使えない
+  # has_many :items, through: :likes は has_many :items と被っているので使えない
   has_many :items, dependent: :destroy
   has_many :drafts, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -24,15 +24,19 @@ class User < ApplicationRecord
             presence: true,
             length: {minimum: 6},
             # サインアップ時と、パスワードリセット時のみバリデーションする
-            on: [:create, :password_reset]
+            on: %i(create password_reset)
   validate :old_password_authenticate,
            on: :password_reset
+
+  def self.find_by_identity(identity)
+    User.find_by(screen_name: identity) || User.find_by(email: identity)
+  end
 
   private
 
   # 旧パスワードの認証
   def old_password_authenticate
-    # self.authenticate(old_password)だと認証OKにならないので一生バリデーション通らない(原因不明)
+    # TODO self.authenticate(old_password)だと認証OKにならないので一生バリデーション通らない(原因不明)
     # 仕方ないのでuserを持ってくる
     user = User.find(self.id)
     errors.add(:old_password, '現在のパスワードが間違っています。') unless user.authenticate(old_password)

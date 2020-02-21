@@ -1,10 +1,9 @@
 class UsersController < ApplicationController
-  skip_before_action :check_logged_in, only: [:show, :new, :create]
-  before_action :set_current_user, only: [:profile, :profile_update, :password, :password_update]
+  skip_before_action :check_logged_in, only: %i(show new create)
+  before_action :set_current_user, only: %i(profile profile_update password password_update)
 
   def show
-    # ヒットしなかったら404にしたい
-    # => find_by!を使用して、ActiveRecord::RecordNotFoundがraiseされるようにする
+    # ヒットしなかったら404にしたい => find_by!を使用する
     @user = User.find_by!(screen_name: params[:screen_name])
   end
 
@@ -15,7 +14,6 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-
     if @user.save
       # セッション固定攻撃への対策
       reset_session
@@ -47,9 +45,7 @@ class UsersController < ApplicationController
   end
 
   def password_update
-    # @user.old_password = user_params[:old_password]
-    # @user.password = user_params[:password]
-    # 上記だと冗長なので、以下のように書く(updateはcontextを引数に取れないため、attributesとsaveを使う)
+    # updateはcontextを引数に取れないため、attributesとsaveを使う
     @user.attributes = user_params
     if @user.save(context: :password_reset)
       redirect_to settings_password_url, notice: 'パスワードを更新しました。'

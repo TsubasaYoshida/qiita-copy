@@ -26,6 +26,47 @@ class Draft < ApplicationRecord
             # 最大50文字のタグが5つまで＝250文字、スペースで区切るためそのスペース分＝4文字
             length: {maximum: 254}
 
+  def restore_tag_names
+    self.tag_names = self.tags.pluck(:name).join(' ')
+  end
+
+  def get_update_message
+    self.item ? '記事を編集しました。' : '記事を投稿しました。'
+  end
+
+  def update_draft(draft_params)
+    self.transaction do
+      self.update!(draft_params)
+      attach_tags
+      if self.type == 'post'
+        make_copy_to_item
+        self.update!(edit_after_posting: false)
+      end
+    end
+    true
+  rescue ActiveRecord::RecordInvalid
+  end
+
+  def destroy_draft
+    if self.item
+      self.transaction do
+        # item の内容に戻す
+        self.assign_attributes(title: self.item.title, body: self.item.body, edit_after_posting: false)
+        self.save!(validate: false)
+        attach_tags_from_item
+      end
+    else
+      self.destroy
+    end
+  end
+
+  # TODO 関連先のitemを取得できないので用意したが、なぜ取得できないのかわからない
+  def item_url
+    Rails.application.routes.url_helpers.url_for(controller: :items, action: :show, screen_name: self.user.screen_name, id: self.hashid, only_path: true)
+  end
+
+  private
+
   def attach_tags
     # 毎回タグをデタッチしてからアタッチし直す(タグ削除やタグ更新のため)
     self.tags.clear
@@ -38,23 +79,10 @@ class Draft < ApplicationRecord
     Item.make_copy(self) if self.type == 'post'
   end
 
-  def restore_tag_names
-    self.tag_names = self.tags.pluck(:name).join(' ')
-  end
-
-  def destroy_draft
-    if self.item
-      # バリデーションスキップする必要がある
-      self.assign_attributes(title: self.item.title, body: self.item.body, edit_after_posting: false)
-      self.save(validate: false)
-
-      self.tags.clear
-      self.item.tags.each do |tag|
-        tag.drafts << self
-      end
-
-    else
-      self.destroy
+  def attach_tags_from_item
+    self.tags.clear
+    self.item.tags.each do |tag|
+      tag.drafts << self
     end
   end
 end
