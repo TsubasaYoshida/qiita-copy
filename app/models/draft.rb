@@ -8,6 +8,9 @@ class Draft < ApplicationRecord
   attr_accessor :tag_names
   attr_accessor :type
 
+  after_create :attach_tags
+  after_create :make_copy_to_item
+
   TYPE = {'Ciita に投稿': :post, '下書き保存': :save}
 
   validates :title,
@@ -29,6 +32,10 @@ class Draft < ApplicationRecord
     self.tag_names.split.each do |tag_name|
       Tag.find_or_create_by(name: tag_name).drafts << self
     end
+  end
+
+  def make_copy_to_item
+    Item.make_copy(self) if self.type == 'post'
   end
 
   def restore_tag_names

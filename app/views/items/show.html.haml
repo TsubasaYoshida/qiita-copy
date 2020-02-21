@@ -32,7 +32,7 @@
           いいね済み
         .item-article__footer-like-count
           = @item.likes.size
-      - elsif like_instance(@item).my_item?
+      - elsif my_item?(@item)
         .item-article__footer-like-my-item
           %button{type: 'button', disabled: true}
             = icon('fas', 'thumbs-up')

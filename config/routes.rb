@@ -24,10 +24,10 @@ Rails.application.routes.draw do
   delete ':screen_name/items/:id', to: 'items#destroy', as: :item_destroy
 
   # comments
-  post ':screen_name/items/:item_id/comments', to: 'comments#create', as: :comments
-  get ':screen_name/items/:item_id/comments/:id/edit', to: 'comments#edit', as: :comment_edit
-  patch ':screen_name/items/:item_id/comments/:id', to: 'comments#update', as: :comment_update
-  delete ':screen_name/items/:item_id/comments/:id', to: 'comments#destroy', as: :comment_destroy
+  post ':screen_name/items/:draft_id/comments', to: 'comments#create', as: :comments
+  get ':screen_name/items/:draft_id/comments/:id/edit', to: 'comments#edit', as: :comment_edit
+  patch ':screen_name/items/:draft_id/comments/:id', to: 'comments#update', as: :comment_update
+  delete ':screen_name/items/:draft_id/comments/:id', to: 'comments#destroy', as: :comment_destroy
 
   # tags
   get 'tags/:name', to: 'tags#show', as: :tag

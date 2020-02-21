@@ -6,8 +6,8 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @comment = Comment.new(comment_params)
-    @comment.assign_attributes(user_id: current_user.id, item_id: @item.id)
+    @comment = current_user.comments.build(comment_params)
+    @comment.item = @item
     if @comment.save
       redirect_to @item.url, notice: 'コメントを投稿しました。'
     else
@@ -31,11 +31,11 @@ class CommentsController < ApplicationController
   private
 
   def set_item
-    @item = Item.get_item(params[:screen_name], params[:item_id])
+    @item = Item.get_item(params[:screen_name], params[:draft_id])
   end
 
   def set_comment
-    @comment = Item.get_item(params[:screen_name], params[:item_id]).comments.find(params[:id])
+    @comment = Item.get_item(params[:screen_name], params[:draft_id]).comments.find(params[:id])
   end
 
   def comment_params

@@ -1,5 +1,5 @@
 class DraftsController < ApplicationController
-  before_action :set_draft, only: [:edit, :update, :destroy]
+  before_action :set_draft, only: %i(edit update destroy)
 
   def index
   end
@@ -15,19 +15,11 @@ class DraftsController < ApplicationController
   end
 
   def create
-    @draft = Draft.new(draft_params)
-    @draft.user_id = current_user.id
-
+    @draft = current_user.drafts.build(draft_params)
     if @draft.save
-      @draft.attach_tags
-
       # TODO 本当は StringInquirer を使いたいが、うまく動かない
-      if @draft.type == 'post'
-        item = Item.make_copy(@draft)
-        redirect_to item.url, notice: '記事を投稿しました。'
-      else
-        redirect_to drafts_url, notice: '下書き保存しました。'
-      end
+      redirect_to @draft.item.url, notice: '記事を投稿しました。' if @draft.type == 'post'
+      redirect_to drafts_url, notice: '下書き保存しました。' if @draft.type == 'save'
     else
       render :new
     end
