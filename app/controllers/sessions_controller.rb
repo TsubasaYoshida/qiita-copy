@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to :root, notice: 'ログインしました。'
     else
-      flash.now[:danger] = '入力値が誤っています。'
+      flash.now[:error] = '入力値が誤っています。'
       render :new
     end
   end
