@@ -20,16 +20,18 @@ class Item < ApplicationRecord
         user_id: draft.user_id,
         draft_id: draft.id,
     )
-
-    # 毎回タグをデタッチしてからアタッチし直す(タグ削除やタグ更新のため)
-    item.tags.clear
-    # draft.tags.each だと動かない。draft.tags.all.each なら動く。
-    draft.tags.all.each do |tag|
-      tag.items << item
-    end
+    item.attach_tags_from_draft(draft)
   end
 
   def url
     Rails.application.routes.url_helpers.url_for(controller: :items, action: :show, screen_name: self.user.screen_name, id: self.draft.hashid, only_path: true)
+  end
+
+  private
+
+  def attach_tags_from_draft(draft)
+    self.tags.clear
+    # draft.tags.each だと動かない。draft.tags.all.each なら動く。
+    draft.tags.all.each {|tag| tag.items << self}
   end
 end

@@ -68,7 +68,6 @@ class Draft < ApplicationRecord
   private
 
   def attach_tags
-    # 毎回タグをデタッチしてからアタッチし直す(タグ削除やタグ更新のため)
     self.tags.clear
     self.tag_names.split.each do |tag_name|
       Tag.find_or_create_by(name: tag_name).drafts << self
@@ -81,8 +80,6 @@ class Draft < ApplicationRecord
 
   def attach_tags_from_item
     self.tags.clear
-    self.item.tags.each do |tag|
-      tag.drafts << self
-    end
+    self.item.tags.each {|tag| tag.drafts << self}
   end
 end
