@@ -48,7 +48,7 @@
                       = link_to 'ユーザー登録', signup_path
                     %li.header__menu-li
                       = link_to 'ログイン', login_path
-        = render 'layouts/notice'
+        = render 'layouts/notice' if notice
         %main.main
           .main-container
             = yield
