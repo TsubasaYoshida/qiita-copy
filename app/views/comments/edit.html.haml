@@ -1,1 +1,10 @@
-= render 'form', path: comment_update_path(@comment.item.user.screen_name, @comment.item.draft.hashid, @comment)
+.comment-edit
+  .comment-edit__caption
+    = icon('fas', 'comments')
+    コメント編集
+  .comment-edit__item-info
+    .comment-edit__item-title-label
+      記事：
+    .comment-edit__item-title
+      = @comment.item.title
+  = render 'form', path: comment_update_path(@comment.item.user.screen_name, @comment.item.draft.hashid, @comment)

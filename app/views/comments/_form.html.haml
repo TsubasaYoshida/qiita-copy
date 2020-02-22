@@ -1,4 +1,4 @@
 .comment-new-content
   = simple_form_for(@comment, url: path) do |f|
     = f.input :body, label: false, placeholder: 'コメントを入力'
-    = f.button :submit, '投稿', class: 'comment-new-button'
+    = f.button :submit, class: 'comment-new-button'

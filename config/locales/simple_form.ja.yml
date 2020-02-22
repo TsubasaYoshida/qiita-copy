@@ -5,6 +5,9 @@ ja:
         submit: 'Ciita にログイン'
       draft:
         create: '送信する'
+      comment:
+        create: '投稿'
+        update: '更新'
   simple_form:
     labels:
       user:
