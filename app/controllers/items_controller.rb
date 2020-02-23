@@ -1,21 +1,23 @@
 class ItemsController < ApplicationController
   before_action :set_item
+  before_action :set_comment, only: :show
   skip_before_action :check_logged_in, only: :show
 
   def show
-    @comment = Comment.new
-    # 未ログイン状態でも呼ばれるため、lonely-operatorを使用する
-    @like = Like.find_or_initialize_by(user_id: current_user&.id, item_id: @item.id)
   end
 
   def destroy
     @item.draft.destroy
-    redirect_to current_user_url
+    redirect_to :root
   end
 
   private
 
   def set_item
     @item = Item.get_item(params[:screen_name], params[:id])
+  end
+
+  def set_comment
+    @comment = Comment.new
   end
 end

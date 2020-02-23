@@ -1,10 +1,16 @@
+- content_for(:html_title) { "#{@user.screen_name} - Ciita" }
+
 .user-show-info
   .user-show-info__screen-name
     @#{@user.screen_name}
-  .user-show-info__item-count<
+  .user-show-info__count<
     = @user.items.size
-    %span.user-show-info__item-count-unit
+    %span.user-show-info__count-unit
       Items
+  .user-show-info__count<
+    = get_contribution(@user.screen_name)
+    %span.user-show-info__count-unit
+      Contribution
 
 .user-show-item
   - @user.items.each do |item|
@@ -12,7 +18,7 @@
       .user-show-item__one-date
         = l item.created_at, format: :item
       .user-show-item__one-title
-        = link_to item.title, item_path(item.user.screen_name, item.draft.hashid)
+        = link_to item.title, item.url
       .user-show-item__one-tag-wrapper
         - item.tags.each do |tag|
           = link_to tag.name, tag_path(tag.name), class: 'user-show-item__one-tag'

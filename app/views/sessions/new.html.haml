@@ -1,3 +1,5 @@
+- content_for(:html_title) { 'ログイン - Ciita' }
+
 .login-all-wrapper
   .login-logo
     Ciita
@@ -7,6 +9,12 @@
       Ciita にログイン
 
     .login-form
+
+      - if flash[:error]
+        .login-form__error
+          .login-form__error-message
+            = flash[:error]
+
       = simple_form_for(:session, url: login_path) do |f|
         .form-group
           = f.input :identity, label: false, input_html: {class: 'form-control'}

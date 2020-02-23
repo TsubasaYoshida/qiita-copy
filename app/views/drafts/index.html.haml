@@ -1,8 +1,10 @@
+- content_for(:html_title) { '下書き一覧 - Ciita' }
+
 .draft-list
   .draft-list__title
     = icon('fas', 'save')
     下書き一覧
-  - my_drafts.each do |draft|
+  - get_drafts.each do |draft|
     .draft-item
       .draft-item__date
         = l draft.updated_at, format: :long

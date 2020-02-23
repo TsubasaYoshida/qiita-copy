@@ -8,10 +8,10 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
 
   # users
-  get '/signup', to: 'users#new'
+  get 'signup', to: 'users#new'
   get ':screen_name', to: 'users#show', as: :user
-  post '/registration', to: 'users#create', as: :users
-  get '/deactivate', to: 'users#destroy', as: :user_destroy
+  post 'registration', to: 'users#create', as: :users
+  delete 'deactivate', to: 'users#destroy'
 
   get 'settings/profile', to: 'users#profile'
   put 'settings/profile', to: 'users#profile_update'
@@ -20,14 +20,14 @@ Rails.application.routes.draw do
   put 'settings/password', to: 'users#password_update'
 
   # items
-  get ':screen_name/items/:id', to: 'items#show', as: :item
+  get ':screen_name/items/:id', to: 'items#show'
   delete ':screen_name/items/:id', to: 'items#destroy', as: :item_destroy
 
   # comments
-  post ':screen_name/items/:item_id/comments', to: 'comments#create', as: :comments
-  get ':screen_name/items/:item_id/comments/:id/edit', to: 'comments#edit', as: :comment_edit
-  patch ':screen_name/items/:item_id/comments/:id', to: 'comments#update', as: :comment_update
-  delete ':screen_name/items/:item_id/comments/:id', to: 'comments#destroy', as: :comment_destroy
+  post ':screen_name/items/:draft_id/comments', to: 'comments#create', as: :comments
+  get ':screen_name/items/:draft_id/comments/:id/edit', to: 'comments#edit', as: :comment_edit
+  patch ':screen_name/items/:draft_id/comments/:id', to: 'comments#update', as: :comment_update
+  delete ':screen_name/items/:draft_id/comments/:id', to: 'comments#destroy', as: :comment_destroy
 
   # tags
   get 'tags/:name', to: 'tags#show', as: :tag

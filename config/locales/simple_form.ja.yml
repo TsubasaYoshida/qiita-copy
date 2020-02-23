@@ -5,6 +5,9 @@ ja:
         submit: 'Ciita にログイン'
       draft:
         create: '送信する'
+      comment:
+        create: '投稿'
+        update: '更新'
   simple_form:
     labels:
       user:
@@ -28,3 +31,5 @@ ja:
         title: 'タイトル'
         tag_names: 'プログラミング技術に関連するタグをスペース区切りで5つまで入力（例: Ruby Rails:4.2.0）'
         body: 'プログラミング知識をMarkdown記法で書いて共有しよう'
+      comment:
+        body: 'コメントを入力'

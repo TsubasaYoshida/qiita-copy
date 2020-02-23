@@ -7,5 +7,4 @@ class Comment < ApplicationRecord
   validates :body,
             presence: true,
             length: {maximum: 50_000}
-
 end

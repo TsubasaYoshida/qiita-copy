@@ -1,0 +1,12 @@
+- content_for(:html_title) { '500 error - Ciita' }
+
+.error-page-wrapper
+  .logo
+    Ciita
+
+  .error-page
+    .error-page__title
+      500
+    %p.error-page__message
+      エラーが発生しました。
+    = link_to 'トップページへ', root_path, class: 'error-page__link'

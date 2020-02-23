@@ -1,0 +1,27 @@
+.error-page-wrapper {
+  margin-right: auto;
+  margin-left: auto;
+  color: #4a4a4a;
+  width: 1160px;
+}
+
+.error-page {
+  margin: 0 auto;
+  width: 50%;
+  text-align: center;
+  &__title {
+    margin: 32px 0;
+    letter-spacing: 1px;
+    font-size: 3.6rem;
+    font-weight: 400;
+  }
+  &__message {
+    margin-bottom: 24px;
+    font-size: 1.6rem;
+    line-height: 1.6;
+  }
+  &__link {
+    font-size: 1.6rem;
+    color: #337ab7;
+  }
+}

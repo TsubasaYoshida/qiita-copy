@@ -1,0 +1,22 @@
+.comment-edit {
+  background-color: #fff;
+  padding: 32px;
+  flex-grow: 1;
+  &__caption {
+    font-size: 1.6rem;
+    margin-bottom: 24px;
+  }
+  &__item-info {
+    margin-bottom: 24px;
+  }
+  &__item-title-label {
+    display: inline;
+    font-size: 1.2rem;
+    color: #666;
+  }
+  &__item-title {
+    display: inline;
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+}

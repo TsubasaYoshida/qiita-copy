@@ -40,27 +40,6 @@
       font-weight: 700;
     }
   }
-  &__form-text {
-    display: block;
-    width: 100%;
-    font-size: 1.6rem;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-    padding: 8px 16px;
-    margin: .6em 0 20px;
-    box-sizing: border-box;
-  }
-  &__form-textarea {
-    display: block;
-    width: 100%;
-    font-size: 1.6rem;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-    padding: 8px 16px;
-    margin: .6em 0 20px;
-    box-sizing: border-box;
-    height: 600px;
-  }
   &__form-submit {
     line-height: 1.4;
     color: #fff;

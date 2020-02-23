@@ -1,3 +1,5 @@
+- content_for(:html_title) { "#{@item.title} - Ciita" }
+
 .item-article
   .item-article__header
     .item-article__header-info
@@ -5,34 +7,34 @@
         = link_to "@#{@item.user.screen_name}", user_path(@item.user.screen_name)
       .item-article__header-time
         = get_item_time(@item)
-      - if my_item?(@item)
+      - if is_mine?(@item)
         .item-article__header-meta
           .item-article__header-edit
-            = link_to edit_draft_path do
+            = link_to edit_draft_path(@item.draft) do
               = icon('fas', 'pencil-alt')
               = '編集する'
           .item-article__header-delete
-            = link_to item_destroy_path, method: :delete, data: { confirm: '本当に削除してもよろしいですか？' } do
+            = link_to item_destroy_path(@item.user.screen_name, @item), method: :delete, data: { confirm: '本当に削除してもよろしいですか？' } do
               = icon('fas', 'trash-alt')
               = '削除する'
     .item-article__header-title
       = @item.title
     .item-article__header-tags-wrapper
       - @item.tags.each do |tag|
-        = link_to tag.name, tag_url(tag), class: 'item-article__header-tag'
+        = link_to tag.name, tag_path(tag.name), class: 'item-article__header-tag'
 
   .item-article__body
     = markdown @item.body
 
   .item-article__footer
     .item-article__footer-like-wrapper
-      - if @like.persisted?
-        = button_to like_destroy_path(@item.user.screen_name, @item.draft.hashid, @like), method: :delete do
+      - if get_like_instance(@item).persisted?
+        = button_to like_destroy_path(@item.user.screen_name, @item.draft.hashid, get_like_instance(@item)), method: :delete do
           = icon('fas', 'check', class: 'item__thumbs-up-pressed')
           いいね済み
         .item-article__footer-like-count
           = @item.likes.size
-      - elsif @like.my_item?
+      - elsif is_mine?(@item)
         .item-article__footer-like-my-item
           %button{type: 'button', disabled: true}
             = icon('fas', 'thumbs-up')
@@ -40,7 +42,7 @@
           .item-article__footer-like-count-my-item
             = @item.likes.size
       - else
-        = button_to likes_path(@item.user.screen_name, @item.draft.hashid, @like) do
+        = button_to likes_path(@item.user.screen_name, @item.draft.hashid, get_like_instance(@item)) do
           = icon('fas', 'thumbs-up', class: 'item__thumbs-up-pressed')
           いいね
         .item-article__footer-like-count
@@ -60,7 +62,7 @@
           = link_to "@#{comment.user.screen_name}", user_path(comment.user.screen_name)
         .comment__header-time
           = l comment.updated_at, format: :long
-        - if my_comment?(comment)
+        - if is_mine?(comment)
           .comment__header-meta
             .comment__header-edit
               = link_to comment_edit_path(@item.user.screen_name, @item.draft.hashid, comment) do

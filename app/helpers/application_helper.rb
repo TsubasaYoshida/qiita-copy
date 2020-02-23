@@ -12,6 +12,11 @@ module ApplicationHelper
     end
   end
 
+  def is_mine?(object)
+    # 未ログイン状態でも呼ばれるため、lonely-operatorを使用する
+    object.user_id == current_user&.id
+  end
+
   def markdown(text)
     render_options = {
         filter_html: false,
@@ -19,7 +24,6 @@ module ApplicationHelper
     }
     # renderer = Redcarpet::Render::HTML.new(render_options)
     renderer = Redcarpet::Render::CustomMarkdownRenderer.new(render_options)
-
     extensions = {
         autolink: true,
         fenced_code_blocks: true,

@@ -39,6 +39,15 @@
   padding: 20px 0 5px;
   margin: 0 auto;
   width: 350px;
+  &__error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: .25rem;
+    padding: 12px;
+    margin-bottom: 16px;
+    text-align: left;
+  }
 }
 
 .login-button {

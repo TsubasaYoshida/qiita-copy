@@ -89,6 +89,8 @@ GEM
       haml (>= 4.0.6, < 6.0)
       html2haml (>= 1.0.1)
       railties (>= 5.1)
+    hanmoto (0.4.0)
+      rails (>= 5.1.0)
     hashid-rails (1.4.0)
       activerecord (>= 4.0)
       hashids (~> 1.0)
@@ -246,6 +248,7 @@ DEPENDENCIES
   byebug
   font-awesome-sass (~> 5.12.0)
   haml-rails
+  hanmoto
   hashid-rails (~> 1.0)
   i18n_generators
   jbuilder (~> 2.7)
