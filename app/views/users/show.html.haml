@@ -3,10 +3,14 @@
 .user-show-info
   .user-show-info__screen-name
     @#{@user.screen_name}
-  .user-show-info__item-count<
+  .user-show-info__count<
     = @user.items.size
-    %span.user-show-info__item-count-unit
+    %span.user-show-info__count-unit
       Items
+  .user-show-info__count<
+    = get_contribution(@user.screen_name)
+    %span.user-show-info__count-unit
+      Contribution
 
 .user-show-item
   - @user.items.each do |item|
