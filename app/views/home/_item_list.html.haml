@@ -1,0 +1,14 @@
+.item-header
+  %span.item-header__icon
+    = icon('fas', 'list')
+  記事一覧
+- @items.each do |item|
+  .item
+    .item__title
+      = link_to item.title, item.url
+    .item__meta
+      by
+      = link_to item.user.screen_name, user_path(item.user.screen_name)
+      #{time_ago_in_words(item.created_at)} ago
+      = icon('fas', 'thumbs-up', class: pressed_like?(item))
+      = item.likes.size

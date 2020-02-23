@@ -7,7 +7,7 @@ module LikesHelper
 
   def pressed_like?(item)
     # 未ログイン状態でも呼ばれるため、lonely-operatorを使用する
-    Like.exists?(user_id: current_user&.id, item_id: item.id)
+    'item__thumbs-up-pressed' if Like.exists?(user_id: current_user&.id, item_id: item.id)
   end
 
   def get_contribution_ranking
