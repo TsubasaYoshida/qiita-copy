@@ -9,7 +9,7 @@
       Items
 
 .tag-item-list
-  - @tag.items.each do |item|
+  - @tag.items.recent.each do |item|
     .tag-item
       .tag-item__date
         = l item.created_at, format: :item

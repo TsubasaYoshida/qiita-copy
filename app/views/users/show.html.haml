@@ -13,7 +13,7 @@
       Contribution
 
 .user-show-item
-  - @user.items.each do |item|
+  - @user.items.recent.each do |item|
     .user-show-item__one
       .user-show-item__one-date
         = l item.created_at, format: :item
