@@ -23,7 +23,7 @@
 - パスワードリセット
 - 通知
 
-## Requirement
+## This service is made of ...
 - Ruby 2.7.0
 - Rails 6.0.2.1
 
