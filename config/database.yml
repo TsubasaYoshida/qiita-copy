@@ -49,6 +49,6 @@ test:
 #
 production:
   <<: *default
-  database: qiita_copy_production
-  username: qiita_copy
-  password: <%= ENV['QIITA_COPY_DATABASE_PASSWORD'] %>
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
