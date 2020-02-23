@@ -27,8 +27,6 @@ class Item < ApplicationRecord
     Rails.application.routes.url_helpers.url_for(controller: :items, action: :show, screen_name: self.user.screen_name, id: self.draft.hashid, only_path: true)
   end
 
-  private
-
   def attach_tags_from_draft(draft)
     self.tags.clear
     # draft.tags.each だと動かない。draft.tags.all.each なら動く。
