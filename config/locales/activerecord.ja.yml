@@ -5,3 +5,10 @@ ja:
         screen_name: ユーザ名
         email: メールアドレス
         password: パスワード
+        old_password: ''
+      draft:
+        title: タイトル
+        tag_names: タグ
+        body: 本文
+      comment:
+        body: コメント
