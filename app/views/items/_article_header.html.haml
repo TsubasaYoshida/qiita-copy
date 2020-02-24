@@ -1,0 +1,18 @@
+.item-article__header-info
+  .item-article__header-author
+    = link_to "@#{@item.user.screen_name}", user_path(@item.user.screen_name)
+  .item-article__header-time
+    = get_item_time(@item)
+  - if is_mine?(@item)
+    .item-article__header-meta
+      .item-article__header-edit
+        = link_to edit_draft_path(@item.draft) do
+          #{icon('fas', 'pencil-alt')} 編集する
+      .item-article__header-delete
+        = link_to item_destroy_path(@item.user.screen_name, @item), method: :delete, data: { confirm: '本当に削除してもよろしいですか？' } do
+          #{icon('fas', 'trash-alt')} 削除する
+.item-article__header-title
+  = @item.title
+.item-article__header-tags-wrapper
+  - @item.tags.each do |tag|
+    = link_to tag.name, tag_path(tag.name), class: 'item-article__header-tag'

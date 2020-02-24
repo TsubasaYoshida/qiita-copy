@@ -1,6 +1,9 @@
 # Qiita-Copy
 *Imitation grows you.*
 
+## URL
+- [https://qiita-copy.herokuapp.com](https://qiita-copy.herokuapp.com)
+
 ## What's this?
 - Qiitaのコピーサービスを作成するトレーニングリポジトリ
 
@@ -20,7 +23,7 @@
 - パスワードリセット
 - 通知
 
-## Requirement
+## This service is made of ...
 - Ruby 2.7.0
 - Rails 6.0.2.1
 

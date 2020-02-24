@@ -1,15 +1,12 @@
 - content_for(:html_title) { '新規登録 - Ciita' }
-
 .signup-all-wrapper
   .signup-logo
     Ciita
-
   .signup-container
     .signup-title
       Ciitaにようこそ!
     .signup-lead
       新規登録(無料)して利用を開始しましょう。
-
     .signup-form
       = simple_form_for @user do |f|
         .form-group
@@ -20,7 +17,6 @@
           = f.input :password, label: false, input_html: {class: 'form-control'}
         .form-group
           = f.button :submit, class: 'signup-button'
-
     .login-leading
       もしQiitaのアカウントを持っている場合は
       = link_to 'ログイン', login_path

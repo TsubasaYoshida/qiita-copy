@@ -1,0 +1,22 @@
+.comment__header
+  #{icon('fas', 'comments')} コメント
+- if @item.comments.size.zero?
+  .comment__message--size-zero
+    この記事にコメントはありません。
+- @item.comments.each do |comment|
+  .comment__item
+    .comment__header-info
+      .comment__header-author
+        = link_to "@#{comment.user.screen_name}", user_path(comment.user.screen_name)
+      .comment__header-time
+        = l comment.updated_at, format: :long
+      - if is_mine?(comment)
+        .comment__header-meta
+          .comment__header-edit
+            = link_to comment_edit_path(@item.user.screen_name, @item.draft.hashid, comment) do
+              #{icon('fas', 'pencil-alt')} 編集する
+          .comment__header-delete
+            = link_to comment_destroy_path(@item.user.screen_name, @item.draft.hashid, comment), method: :delete, data: { confirm: '本当に削除してもよろしいですか？' } do
+              #{icon('fas', 'trash-alt')} 削除する
+    .comment__body
+      = simple_format comment.body

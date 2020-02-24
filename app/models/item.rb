@@ -8,6 +8,8 @@ class Item < ApplicationRecord
   has_many :users, through: :likes
   has_and_belongs_to_many :tags
 
+  scope :recent, -> {order(created_at: :desc)}
+
   def self.get_item(screen_name, draft_id)
     User.find_by!(screen_name: screen_name).drafts.find_by_hashid(draft_id).item
   end

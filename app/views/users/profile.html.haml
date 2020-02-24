@@ -1,7 +1,5 @@
 - content_for(:html_title) { '設定 - Ciita' }
-
 = render 'menu', active: 'profile'
-
 .setting-main
   .setting__form
     -# Qiitaがputだったため、学習も兼ねてあえてputにしている(patchなら明示不要)
@@ -12,7 +10,6 @@
         = f.input :email, placeholder: false, input_html: {class: 'input-text'}
       .form-group
         = f.button :submit, class: 'setting__form-submit'
-
   .setting-profile__deactivate
     .setting-profile__deactivate-caption
       アカウント削除
