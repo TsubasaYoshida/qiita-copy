@@ -15,7 +15,6 @@
       %script{src: 'https://oss.maxcdn.com/respond/1.4.2/respond.min.js'}
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
-
   %body
     - if @path.in?(%w(sessions#new sessions#create users#new users#create))
       = yield

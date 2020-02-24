@@ -1,20 +1,15 @@
 - content_for(:html_title) { 'ログイン - Ciita' }
-
 .login-all-wrapper
   .login-logo
     Ciita
-
   .login-container
     .login-title
       Ciita にログイン
-
     .login-form
-
       - if flash[:error]
         .login-form__error
           .login-form__error-message
             = flash[:error]
-
       = simple_form_for(:session, url: login_path) do |f|
         .form-group
           = f.input :identity, label: false, input_html: {class: 'form-control'}
@@ -22,7 +17,6 @@
           = f.input :password, label: false, input_html: {class: 'form-control'}
         .form-group
           = f.button :submit, class: 'login-button'
-
     .signup-leading
       Ciita のアカウントを持っていない場合は
       = link_to '新規登録', signup_path

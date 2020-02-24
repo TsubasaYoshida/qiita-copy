@@ -1,5 +1,4 @@
 - content_for(:html_title) { "#{@tag.name} - Ciita" }
-
 .tag-info
   .tag-info__name
     = @tag.name
@@ -7,7 +6,6 @@
     = @tag.items.size
     %span.tag-info__item-count-unit
       Items
-
 .tag-item-list
   - @tag.items.recent.each do |item|
     .tag-item
