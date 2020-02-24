@@ -25,6 +25,8 @@ class Draft < ApplicationRecord
             presence: true,
             # 最大50文字のタグが5つまで＝250文字、スペースで区切るためそのスペース分＝4文字
             length: {maximum: 254}
+  validate :cannot_have_more_than_6_tags
+  validate :cannot_have_duplicate_tags
 
   def restore_tag_names
     self.tag_names = self.tags.pluck(:name).join(' ')
@@ -66,6 +68,14 @@ class Draft < ApplicationRecord
   end
 
   private
+
+  def cannot_have_more_than_6_tags
+    errors.add(:tag_names, 'を6つ以上紐付けることはできません。') if tag_names.split.size > 5
+  end
+
+  def cannot_have_duplicate_tags
+    errors.add(:tag_names, 'を重複して紐付けることはできません。') if (tag_names.split.count - tag_names.split.uniq.count) > 0
+  end
 
   def attach_tags
     self.tags.clear
