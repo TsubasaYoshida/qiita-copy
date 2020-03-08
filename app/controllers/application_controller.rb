@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   private
 
   def check_logged_in
-    redirect_to login_url unless current_user
+    redirect_to new_session_url unless current_user
   end
 
   def set_path

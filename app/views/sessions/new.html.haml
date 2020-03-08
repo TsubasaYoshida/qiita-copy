@@ -10,7 +10,7 @@
         .login-form__error
           .login-form__error-message
             = flash[:error]
-      = simple_form_for(:session, url: login_path) do |f|
+      = simple_form_for(:session, url: session_path) do |f|
         .form-group
           = f.input :identity, label: false, input_html: {class: 'form-control'}
         .form-group

@@ -3,9 +3,7 @@ Rails.application.routes.draw do
   resources :drafts, only: %i(index new edit create update destroy)
 
   # login
-  get 'login', to: 'sessions#new'
-  post 'login', to: 'sessions#create'
-  delete 'logout', to: 'sessions#destroy'
+  resource :session, only: %i(new create destroy)
 
   # users
   get 'signup', to: 'users#new'
