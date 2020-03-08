@@ -13,11 +13,10 @@ Rails.application.routes.draw do
   post 'registration', to: 'users#create', as: :users
   delete 'deactivate', to: 'users#destroy'
 
-  get 'settings/profile', to: 'users#profile'
-  put 'settings/profile', to: 'users#profile_update'
-
-  get 'settings/password', to: 'users#password'
-  put 'settings/password', to: 'users#password_update'
+  namespace :settings do
+    resource :profile, only: %i(edit update)
+    resource :password, only: %i(edit update)
+  end
 
   # items
   get ':screen_name/items/:id', to: 'items#show'

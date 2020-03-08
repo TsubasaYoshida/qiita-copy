@@ -1,9 +1,8 @@
 - content_for(:html_title) { '設定 - Ciita' }
-= render 'menu', active: 'profile'
+= render 'settings/menu', active: 'profile'
 .setting-main
   .setting__form
-    -# Qiitaがputだったため、学習も兼ねてあえてputにしている(patchなら明示不要)
-    = simple_form_for(@user, url: settings_profile_path, method: 'put') do |f|
+    = simple_form_for(@user, url: settings_profile_path) do |f|
       .form-group
         = f.input :screen_name, placeholder: false, input_html: {class: 'input-text'}
       .form-group
