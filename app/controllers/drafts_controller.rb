@@ -9,7 +9,6 @@ class DraftsController < ApplicationController
   end
 
   def edit
-    @draft.restore_tag_names
     # update_attribute を使用して、バリデーションスキップする
     @draft.update_attribute(:edit_after_posting, true) if @draft.item
   end

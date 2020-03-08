@@ -5,7 +5,7 @@ class Draft < ApplicationRecord
   has_one :item, dependent: :destroy
   has_and_belongs_to_many :tags
 
-  attr_accessor :tag_names
+  attr_writer :tag_names
   attr_accessor :type
 
   after_create :attach_tags
@@ -28,8 +28,10 @@ class Draft < ApplicationRecord
   validate :cannot_have_more_than_6_tags
   validate :cannot_have_duplicate_tags
 
-  def restore_tag_names
-    self.tag_names = self.tags.pluck(:name).join(' ')
+  def tag_names
+    # createする時、writerだけじゃなくgetterも呼ばれているため、「@tag_names || 」を使う必要がある。
+    # こう書かないと、バリデーションで引っかかって投稿できない。
+    @tag_names || self.tags.pluck(:name).join(' ')
   end
 
   def get_update_message
