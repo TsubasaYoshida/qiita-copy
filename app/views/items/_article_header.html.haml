@@ -1,6 +1,6 @@
 .item-article__header-info
   .item-article__header-author
-    = link_to "@#{@item.user.screen_name}", user_path(@item.user.screen_name)
+    = link_to "@#{@item.user.screen_name}", user_path(@item.user)
   .item-article__header-time
     = get_item_time(@item)
   - if is_mine?(@item)

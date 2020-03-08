@@ -14,7 +14,7 @@
             %li.header__menu-li
               = link_to '投稿する', new_draft_path
             %li.header__menu-li
-              = link_to 'マイページ', user_path(current_user.screen_name)
+              = link_to 'マイページ', user_path(current_user)
             %li.header__menu-li
               = link_to '下書き一覧', drafts_path
             %li.header__menu-li
@@ -23,6 +23,6 @@
               = link_to 'ログアウト', session_path, method: :delete
           - else
             %li.header__menu-li
-              = link_to 'ユーザー登録', signup_path
+              = link_to 'ユーザー登録', new_user_path
             %li.header__menu-li
               = link_to 'ログイン', new_session_path

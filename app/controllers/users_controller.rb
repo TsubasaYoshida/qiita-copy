@@ -2,8 +2,7 @@ class UsersController < ApplicationController
   skip_before_action :check_logged_in, only: %i(show new create)
 
   def show
-    # ヒットしなかったら404にしたい => find_by!を使用する
-    @user = User.find_by!(screen_name: params[:screen_name])
+    @user = User.find(params[:id])
   end
 
   def new

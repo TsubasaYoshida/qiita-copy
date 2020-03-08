@@ -6,7 +6,7 @@
   .comment__form--not-logged-in
     .comment__form-title--not-logged-in
       あなたもコメントしてみませんか :)
-    = link_to 'ユーザ登録', signup_path, class: 'comment__form-signup-button'
+    = link_to 'ユーザ登録', new_user_path, class: 'comment__form-signup-button'
     .comment__form-login-leading
       すでにアカウントを持っている方は
       = link_to 'ログイン', new_session_path

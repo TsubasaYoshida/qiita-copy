@@ -8,7 +8,7 @@
       = link_to item.title, item.url
     .item__meta
       by
-      = link_to item.user.screen_name, user_path(item.user.screen_name)
+      = link_to item.user.screen_name, user_path(item.user)
       #{time_ago_in_words(item.created_at)} ago
       = icon('fas', 'thumbs-up', class: class_thumbs_up_pressed(item))
       = item.likes.size

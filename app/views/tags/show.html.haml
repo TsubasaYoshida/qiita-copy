@@ -16,7 +16,7 @@
       .tag-item__meta
         .tag-item__author
           by
-          = link_to item.user.screen_name, user_path(item.user.screen_name)
+          = link_to item.user.screen_name, user_path(item.user)
         .tag-item__tag-wrapper
           - item.tags.each do |tag|
             = link_to tag.name, tag_path(tag.name), class: 'tag-item__tag'
