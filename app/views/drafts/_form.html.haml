@@ -7,6 +7,6 @@
     .form-group
       = f.input :body, input_html: {class: 'editor__textarea'}
     .form-group
-      = f.select :type, Draft::TYPE, {selected: "#{:save if @draft.edit_after_posting?}"}, class: 'input-select'
+      = f.select :type, Draft::TYPE, {selected: selected_draft_type(@draft)}, class: 'input-select'
     .form-group
       = f.button :submit, class: 'setting__form-submit'

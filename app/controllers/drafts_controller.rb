@@ -9,8 +9,8 @@ class DraftsController < ApplicationController
   end
 
   def edit
-    # update_attribute を使用して、バリデーションスキップする
-    @draft.update_attribute(:edit_after_posting, true) if @draft.item
+    # 投稿後に編集した記事を下書き一覧に表示するために、touchする
+    @draft.touch
   end
 
   def create
