@@ -9,7 +9,7 @@ class Draft < ApplicationRecord
   attr_accessor :type
 
   after_save :attach_tags
-  after_save :make_copy_to_item
+  after_save :copy_to_item
 
   TYPE = {'Ciita に投稿': :post, '下書き保存': :save}
 
@@ -68,8 +68,16 @@ class Draft < ApplicationRecord
     errors.add(:tag_names, 'を重複して紐付けることはできません。') if (tag_names.split.count - tag_names.split.uniq.count) > 0
   end
 
-  def make_copy_to_item
-    Item.make_copy(self) if post?
+  def copy_to_item
+    if post?
+      item = Item.find_or_initialize_by(draft_id: id)
+      item.update(
+          title: title,
+          body: body,
+          user_id: user_id,
+      )
+      copy_tags_to_item
+    end
   end
 
   def attach_tags
@@ -82,5 +90,11 @@ class Draft < ApplicationRecord
   def copy_tags_from_item
     tags.clear
     item.tags.each {|tag| tag.drafts << self}
+  end
+
+  def copy_tags_to_item
+    item.tags.clear
+    # tags.each だと動かない。tags.all.each なら動く。
+    tags.all.each {|tag| tag.items << item}
   end
 end
