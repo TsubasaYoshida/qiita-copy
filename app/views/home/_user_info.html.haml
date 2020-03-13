@@ -1,6 +1,6 @@
 .user-info
   .user-info__header
-    = link_to "@#{current_user.screen_name}", user_path(current_user.screen_name)
+    = link_to "@#{current_user.screen_name}", user_path(current_user)
   .user-info__stats
     .user-info__stats-item
       .user-info__stats-count

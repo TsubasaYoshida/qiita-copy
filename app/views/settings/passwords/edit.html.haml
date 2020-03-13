@@ -1,9 +1,8 @@
 - content_for(:html_title) { '設定 - Ciita' }
-= render 'menu', active: 'password'
+= render 'settings/menu', active: 'password'
 .setting-main
   .setting__form
-    -# Qiitaがputだったため、学習も兼ねてあえてputにしている(patchなら明示不要)
-    = simple_form_for(@user, url: settings_password_path, method: 'put') do |f|
+    = simple_form_for(@user, url: settings_password_path) do |f|
       .form-group
         = f.input :old_password, input_html: {class: 'input-text'}
       .form-group

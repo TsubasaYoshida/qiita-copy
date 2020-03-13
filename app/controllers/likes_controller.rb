@@ -14,6 +14,6 @@ class LikesController < ApplicationController
   private
 
   def set_item
-    @item = Item.get_item(params[:screen_name], params[:draft_id])
+    @item = Draft.find(params[:draft_id]).item
   end
 end

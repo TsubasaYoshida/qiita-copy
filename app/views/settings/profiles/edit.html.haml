@@ -1,0 +1,15 @@
+- content_for(:html_title) { '設定 - Ciita' }
+= render 'settings/menu', active: 'profile'
+.setting-main
+  .setting__form
+    = simple_form_for(@user, url: settings_profile_path) do |f|
+      .form-group
+        = f.input :screen_name, placeholder: false, input_html: {class: 'input-text'}
+      .form-group
+        = f.input :email, placeholder: false, input_html: {class: 'input-text'}
+      .form-group
+        = f.button :submit, class: 'setting__form-submit'
+  .setting-profile__deactivate
+    .setting-profile__deactivate-caption
+      アカウント削除
+    = button_to 'アカウントを削除する', user_path(current_user), method: :delete, class: 'setting-profile__deactivate-button', data: {confirm: '一度アカウントを削除すると、二度と元に戻せませんが、よろしいですか？'}

@@ -17,7 +17,7 @@ module LikesHelper
   def get_contribution_ranking
     # group(:user_id) ではなく group('items.user_id') でテーブル指定する
     ranking = Like.joins(:item).group('items.user_id').order('count_items_user_id desc').count('items.user_id').first(10)
-    ranking.map {|key, value| [User.find(key).screen_name, value]}
+    ranking.map {|user_id, value| [User.find(user_id), value]}
   end
 
   def get_like_instance(item)

@@ -9,17 +9,18 @@ class DraftsController < ApplicationController
   end
 
   def edit
-    @draft.restore_tag_names
-    # update_attribute を使用して、バリデーションスキップする
-    @draft.update_attribute(:edit_after_posting, true) if @draft.item
+    # 投稿後に編集した記事を下書き一覧に表示するために、touchする
+    @draft.touch
   end
 
   def create
     @draft = current_user.drafts.build(draft_params)
     if @draft.save
-      # TODO 本当は StringInquirer を使いたいが、うまく動かない
-      redirect_to @draft.item.url, notice: '記事を投稿しました。' if @draft.type == 'post'
-      redirect_to drafts_url, notice: '下書き保存しました。' if @draft.type == 'save'
+      if @draft.post?
+        redirect_to item_url(@draft.item), notice: '記事を投稿しました。'
+      else
+        redirect_to drafts_url, notice: '下書き保存しました。'
+      end
     else
       render :new
     end
@@ -27,9 +28,12 @@ class DraftsController < ApplicationController
 
   def update
     message = @draft.get_update_message
-    if @draft.update_draft(draft_params)
-      redirect_to @draft.item_url, notice: message if @draft.type == 'post'
-      redirect_to drafts_url, notice: '下書きを更新しました。' if @draft.type == 'save'
+    if @draft.update(draft_params)
+      if @draft.post?
+        redirect_to item_url(@draft.item), notice: message
+      else
+        redirect_to drafts_url, notice: '下書きを更新しました。'
+      end
     else
       render :edit
     end

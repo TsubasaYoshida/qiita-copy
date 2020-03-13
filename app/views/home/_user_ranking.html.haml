@@ -1,11 +1,11 @@
 .contribution-ranking__header
   ユーザーランキング
-- get_contribution_ranking.each.with_index(1) do |(screen_name, contribution), index|
+- get_contribution_ranking.each.with_index(1) do |(user, contribution), index|
   .contribution-ranking__data
     .contribution-ranking__rank
       = convert_to_trophy(index)
     .contribution-ranking__screen-name
-      = link_to "@#{screen_name}", user_path(screen_name)
+      = link_to "@#{user.screen_name}", user_path(user)
     .contribution-ranking__contribution-info
       .contribution-ranking__contribution-count
         = contribution

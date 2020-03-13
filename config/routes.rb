@@ -1,27 +1,14 @@
 Rails.application.routes.draw do
-  # drafts
+  resource :session, only: %i(new create destroy)
   resources :drafts, only: %i(index new edit create update destroy)
-
-  # login
-  get 'login', to: 'sessions#new'
-  post 'login', to: 'sessions#create'
-  delete 'logout', to: 'sessions#destroy'
-
-  # users
-  get 'signup', to: 'users#new'
-  get ':screen_name', to: 'users#show', as: :user
-  post 'registration', to: 'users#create', as: :users
-  delete 'deactivate', to: 'users#destroy'
-
-  get 'settings/profile', to: 'users#profile'
-  put 'settings/profile', to: 'users#profile_update'
-
-  get 'settings/password', to: 'users#password'
-  put 'settings/password', to: 'users#password_update'
+  resources :users, only: %i(show new create destroy)
+  namespace :settings do
+    resource :profile, only: %i(edit update)
+    resource :password, only: %i(edit update)
+  end
 
   # items
-  get ':screen_name/items/:id', to: 'items#show'
-  delete ':screen_name/items/:id', to: 'items#destroy', as: :item_destroy
+  resources :items, only: %i(show destroy)
 
   # comments
   post ':screen_name/items/:draft_id/comments', to: 'comments#create', as: :comments

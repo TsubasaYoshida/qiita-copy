@@ -1,0 +1,3 @@
+.setting-menu
+  = link_to 'プロフィール', edit_settings_profile_path, class: "#{active == 'profile' ? 'setting-menu__item setting-menu__item--active' : 'setting-menu__item'}"
+  = link_to 'パスワード', edit_settings_password_path, class: "#{active == 'password' ? 'setting-menu__item setting-menu__item--active' : 'setting-menu__item'}"
