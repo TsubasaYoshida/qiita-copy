@@ -8,8 +8,7 @@ Rails.application.routes.draw do
   end
 
   # items
-  get ':screen_name/items/:id', to: 'items#show'
-  delete ':screen_name/items/:id', to: 'items#destroy', as: :item_destroy
+  resources :items, only: %i(show destroy)
 
   # comments
   post ':screen_name/items/:draft_id/comments', to: 'comments#create', as: :comments

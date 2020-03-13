@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
     @comment = current_user.comments.build(comment_params)
     @comment.item = @item
     if @comment.save
-      redirect_to @item.url, notice: 'コメントを投稿しました。'
+      redirect_to item_url(@item), notice: 'コメントを投稿しました。'
     else
       render 'items/show'
     end
@@ -17,7 +17,7 @@ class CommentsController < ApplicationController
 
   def update
     if @comment.update(comment_params)
-      redirect_to @item.url, notice: 'コメントを更新しました。'
+      redirect_to item_url(@item), notice: 'コメントを更新しました。'
     else
       render :edit
     end
@@ -25,17 +25,17 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment.destroy
-    redirect_to @item.url, notice: 'コメントを削除しました。'
+    redirect_to item_url(@item), notice: 'コメントを削除しました。'
   end
 
   private
 
   def set_item
-    @item = Item.get_item(params[:screen_name], params[:draft_id])
+    @item = Draft.find(params[:draft_id]).item
   end
 
   def set_comment
-    @comment = Item.get_item(params[:screen_name], params[:draft_id]).comments.find(params[:id])
+    @comment = Draft.find(params[:draft_id]).item.comments.find(params[:id])
   end
 
   def comment_params

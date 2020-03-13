@@ -12,7 +12,7 @@
       .tag-item__date
         = l item.created_at, format: :item
       .tag-item__title
-        = link_to item.title, item.url
+        = link_to item.title, item_url(item)
       .tag-item__meta
         .tag-item__author
           by

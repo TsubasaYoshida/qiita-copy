@@ -35,4 +35,8 @@ module ApplicationHelper
     }
     Redcarpet::Markdown.new(renderer, extensions).render(text).html_safe
   end
+
+  def plain_layout?
+    "#{controller_path}##{action_name}".in?(%w(sessions#new sessions#create users#new users#create))
+  end
 end

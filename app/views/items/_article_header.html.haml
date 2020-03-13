@@ -9,7 +9,7 @@
         = link_to edit_draft_path(@item.draft) do
           #{icon('fas', 'pencil-alt')} 編集する
       .item-article__header-delete
-        = link_to item_destroy_path(@item.user.screen_name, @item.draft), method: :delete, data: { confirm: '本当に削除してもよろしいですか？' } do
+        = link_to item_path(@item.draft), method: :delete, data: { confirm: '本当に削除してもよろしいですか？' } do
           #{icon('fas', 'trash-alt')} 削除する
 .item-article__header-title
   = @item.title

@@ -5,7 +5,7 @@
 - @items.each do |item|
   .item
     .item__title
-      = link_to item.title, item.url
+      = link_to item.title, item_url(item)
     .item__meta
       by
       = link_to item.user.screen_name, user_path(item.user)

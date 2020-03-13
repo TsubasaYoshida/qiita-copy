@@ -17,7 +17,7 @@ class DraftsController < ApplicationController
     @draft = current_user.drafts.build(draft_params)
     if @draft.save
       if @draft.post?
-        redirect_to @draft.item.url, notice: '記事を投稿しました。'
+        redirect_to item_url(@draft.item), notice: '記事を投稿しました。'
       else
         redirect_to drafts_url, notice: '下書き保存しました。'
       end
@@ -30,7 +30,7 @@ class DraftsController < ApplicationController
     message = @draft.get_update_message
     if @draft.update(draft_params)
       if @draft.post?
-        redirect_to @draft.item.url, notice: message
+        redirect_to item_url(@draft.item), notice: message
       else
         redirect_to drafts_url, notice: '下書きを更新しました。'
       end
